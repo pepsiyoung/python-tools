@@ -2,7 +2,7 @@ import json
 import os
 import argparse
 from tqdm import tqdm
-from pathlib import Path
+from pathlib import Path, PurePath
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]
@@ -25,9 +25,8 @@ def convert(img_size, box):
 
 def decode_json(opt, json_name):
     # 生成txt文件你想存放的路径
-    # txt_name = opt.target_folder + json_name[0:-5] + '.txt'
     txt_name = '%s/%s.txt' % (opt.target_folder, json_name[0:-5])
-    txt_file = open(txt_name, 'w')
+    # txt_file = open(txt_name, 'w')
 
     json_path = os.path.join(opt.source_folder, json_name)
     data = json.load(open(json_path, 'r', encoding='utf-8'))
@@ -45,7 +44,8 @@ def decode_json(opt, json_name):
 
             bb = (x1, y1, x2, y2)
             bbox = convert((img_w, img_h), bb)
-            txt_file.write(str(name2id[label_name]) + " " + " ".join([str(a) for a in bbox]) + '\n')
+            with open(txt_name, 'w') as txt_file:
+                txt_file.write(str(name2id[label_name]) + " " + " ".join([str(a) for a in bbox]) + '\n')
 
 
 def parse_opt(known=False):
@@ -59,10 +59,7 @@ def parse_opt(known=False):
 if __name__ == "__main__":
     opt = parse_opt(True)
     # json_names = os.listdir(opt.source_folder)
-    json_names = Path(opt.source_folder).glob("**/*.jpg")
+    json_names = [x for x in Path(opt.source_folder).iterdir() if PurePath(x).match("*.json")]
 
     for json_name in tqdm(json_names):
-        # txt_name = '%s/%s.txt' % (opt.target_folder, json_name[0:-5])
-        # txt_file = open(txt_name, 'w')
-        decode_json(opt, json_name)
-        # print(json_name)
+        decode_json(opt, json_name.name)
