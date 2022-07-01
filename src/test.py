@@ -1,11 +1,15 @@
+import json
 import os
-from os import listdir, getcwd
+import argparse
+from tqdm import tqdm
 from pathlib import Path, PurePath
 
-# out_file = open(' ./labels/' + 'www.' + 'txt', 'w')
-# f = open('./labels/www.txt', 'w')
-wd = getcwd()
-print('wd=', wd)
-print('os_file=', os.path.abspath(__file__))
+if __name__ == "__main__":
+    image_paths = [x for x in Path('./images').iterdir() if PurePath(x).match("*.jpg")]
+    for image_path in tqdm(image_paths):
+        image_name = image_path.stem
 
-print('resolve=', Path('.').resolve())
+        try:
+            in_file = open('./annotations/{}.xml'.format(image_name))
+        except FileNotFoundError as e:
+            print(e)

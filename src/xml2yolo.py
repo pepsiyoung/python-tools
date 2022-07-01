@@ -54,5 +54,7 @@ wd = getcwd()
 if __name__ == "__main__":
     image_paths = [x for x in Path('./images').iterdir() if PurePath(x).match("*.jpg")]
     for image_path in tqdm(image_paths):
-        print(image_path.name)
-        convert_annotation(image_path.stem)
+        try:
+            convert_annotation(image_path.stem)
+        except FileNotFoundError as e:
+            print(e)
