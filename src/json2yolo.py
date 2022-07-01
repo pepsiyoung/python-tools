@@ -26,7 +26,7 @@ def convert(img_size, box):
 def decode_json(opt, json_name):
     # 生成txt文件你想存放的路径
     txt_name = '%s/%s.txt' % (opt.target_folder, json_name[0:-5])
-    # txt_file = open(txt_name, 'w')
+    txt_file = open(txt_name, 'w')
 
     json_path = os.path.join(opt.source_folder, json_name)
     data = json.load(open(json_path, 'r', encoding='utf-8'))
@@ -44,8 +44,8 @@ def decode_json(opt, json_name):
 
             bb = (x1, y1, x2, y2)
             bbox = convert((img_w, img_h), bb)
-            with open(txt_name, 'w') as txt_file:
-                txt_file.write(str(name2id[label_name]) + " " + " ".join([str(a) for a in bbox]) + '\n')
+            txt_file.write(str(name2id[label_name]) + " " + " ".join([str(a) for a in bbox]) + '\n')
+    txt_file.close()
 
 
 def parse_opt(known=False):
