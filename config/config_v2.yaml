@@ -1,0 +1,23 @@
+sourceFolder: F:\python\CutImage\source111\
+
+# 边框剪裁
+padding:
+  top: 25
+  right: 20
+  bottom: 20
+  left: 60
+
+# 剪裁图片size
+cutSize:
+  weight: 315
+  height: 615
+
+# 图片重叠像素
+coverage: 20
+
+# 图像微调
+bias:
+  - num: 2
+    px: 0
+  - num: 3
+    px: 0
