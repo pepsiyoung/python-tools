@@ -6,7 +6,7 @@ from pathlib import Path, PurePath
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]
-name2id = {'person': 0, 'hook': 1}
+name2id = {'shaohandai': 0, 'yiwu': 1, 'zhengpian': 2, 'quejiao': 3, 'bingpian': 4}
 
 
 def convert(img_size, box):
