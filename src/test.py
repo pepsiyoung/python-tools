@@ -1,25 +1,36 @@
-import json
-import os
-import argparse
-from tqdm import tqdm
-from pathlib import Path, PurePath
-from PIL import Image
-import time
 import torch
-import torch.nn as nn
+import pandas as pd
+from PIL import Image
+from pathlib import Path, PurePath
+from tqdm import tqdm
+
+# f = open("data.txt", 'r')
+# for (index, line) in enumerate(f):
+#     print(index)
+#     print(line)
 
 
-# class MyModel(nn.Module):
-#     def __init__(self):
-#         super().__init__()
-#         self.conv1 = nn.Conv2d(1, 10, 5)  # 输入通道数1，输出通道数10，核的大小5
-#         self.conv2 = nn.Conv2d(10, 20, 3)  # 输入通道数10，输出通道数20，核的大小3
-#
-#     def forward(self, x):
-#         out = self.conv1(x)  # batch*1*28*28 -> batch*10*24*24（28x28的图像经过一次核为5x5的卷积，输出变为24x24）
-#         return out
+# name = 'xuhan'
+# n = 20
+# res = f"{n} {name}'???'{'s' * (n > 1)}"
+# print(res)
 
 
-model = torch.load('/Users/pepsiyoung/Project/my/Jupyter/torchLearning/model/my_model_with_arc.pth')
-model.eval()
-print(model)
+if __name__ == "__main__":
+    # # 任意的多组列表
+    # a = [1, 2, 3]
+    # b = [4, 5, 6]
+    # # 字典中的key值即为csv中列名
+    # dataframe = pd.DataFrame({'a_name': a, 'b_name': b})
+    # # 将DataFrame存储为csv,index表示是否显示行名，default=True
+    # dataframe.to_csv("test.csv", index=False, sep=',')
+
+    source_folder = '/Users/pepsiyoung/Downloads/虚焊漏检对比图片/检测出/标注'
+    save_path = '/Users/pepsiyoung/Downloads/虚焊漏检对比图片/检测出/剪裁'
+
+    image_paths = Path(source_folder).glob('**/8-*.jpg')
+    for im_path in tqdm(list(image_paths)):
+        origin_im = Image.open(im_path)
+        w, h = origin_im.size
+        cut_im = origin_im.crop((320, 15, w - 320, 610))
+        cut_im.save("{0}/{1}.jpg".format(save_path, Path(im_path).stem))
