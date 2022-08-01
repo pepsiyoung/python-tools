@@ -1,36 +1,80 @@
-import torch
-import pandas as pd
+import cv2
+import os
 from PIL import Image
-from pathlib import Path, PurePath
-from tqdm import tqdm
 
-# f = open("data.txt", 'r')
-# for (index, line) in enumerate(f):
-#     print(index)
-#     print(line)
+xml_head = '''<annotation>
+    <folder>VOC2007</folder>
+    <!--文件名-->
+    <filename>{}</filename>.
+    <source>
+        <database>The VOC2007 Database</database>
+        <annotation>PASCAL VOC2007</annotation>
+        <image>flickr</image>
+        <flickrid>325991873</flickrid>
+    </source>
+    <owner>
+        <flickrid>null</flickrid>
+        <name>null</name>
+    </owner>    
+    <size>
+        <width>{}</width>
+        <height>{}</height>
+        <depth>{}</depth>
+    </size>
+    <segmented>0</segmented>
+    '''
+xml_obj = '''
+    <object>        
+        <name>{}</name>
+        <pose>Rear</pose>
+        <!--是否被裁减，0表示完整，1表示不完整-->
+        <truncated>0</truncated>
+        <!--是否容易识别，0表示容易，1表示困难-->
+        <difficult>0</difficult>
+        <!--bounding box的四个坐标-->
+        <bndbox>
+            <xmin>{}</xmin>
+            <ymin>{}</ymin>
+            <xmax>{}</xmax>
+            <ymax>{}</ymax>
+        </bndbox>
+    </object>
+    '''
+xml_end = '''
+</annotation>'''
 
+labels = ['A', 'B', 'C']  # label for datasets
 
-# name = 'xuhan'
-# n = 20
-# res = f"{n} {name}'???'{'s' * (n > 1)}"
-# print(res)
+cnt = 0
 
+jpg = r'F:\deep-learning\datasets\YOLO可训练数据\NEU-DET\train\images\crazing_1.jpg'  # image path
+txt = r'F:\deep-learning\datasets\YOLO可训练数据\NEU-DET\train\labels\crazing_1.txt'  # yolo label txt path
+xml_path = r'C:\Users\pozhe\Downloads\crazing_1.xml'  # xml save path
 
-if __name__ == "__main__":
-    # # 任意的多组列表
-    # a = [1, 2, 3]
-    # b = [4, 5, 6]
-    # # 字典中的key值即为csv中列名
-    # dataframe = pd.DataFrame({'a_name': a, 'b_name': b})
-    # # 将DataFrame存储为csv,index表示是否显示行名，default=True
-    # dataframe.to_csv("test.csv", index=False, sep=',')
+obj = ''
 
-    source_folder = '/Users/pepsiyoung/Downloads/虚焊漏检对比图片/检测出/标注'
-    save_path = '/Users/pepsiyoung/Downloads/虚焊漏检对比图片/检测出/剪裁'
+# img = cv2.imread(jpg)
+# img_h, img_w = img.shape[0], img.shape[1]
+img = Image.open(jpg)
+img_h, img_w = img.size
 
-    image_paths = Path(source_folder).glob('**/8-*.jpg')
-    for im_path in tqdm(list(image_paths)):
-        origin_im = Image.open(im_path)
-        w, h = origin_im.size
-        cut_im = origin_im.crop((320, 15, w - 320, 610))
-        cut_im.save("{0}/{1}.jpg".format(save_path, Path(im_path).stem))
+head = xml_head.format(str(jpg), str(img_w), str(img_h))
+with open(txt, 'r') as f:
+    for line in f.readlines():
+        yolo_datas = line.strip().split(' ')
+        label = int(float(yolo_datas[0].strip()))
+        center_x = round(float(str(yolo_datas[1]).strip()) * img_w)
+        center_y = round(float(str(yolo_datas[2]).strip()) * img_h)
+        bbox_width = round(float(str(yolo_datas[3]).strip()) * img_w)
+        bbox_height = round(float(str(yolo_datas[4]).strip()) * img_h)
+
+        xmin = str(int(center_x - bbox_width / 2))
+        ymin = str(int(center_y - bbox_height / 2))
+        xmax = str(int(center_x + bbox_width / 2))
+        ymax = str(int(center_y + bbox_height / 2))
+
+        obj += xml_obj.format(labels[label], xmin, ymin, xmax, ymax)
+with open(xml_path, 'w') as f_xml:
+    f_xml.write(head + obj + xml_end)
+cnt += 1
+print(cnt)
