@@ -7,31 +7,21 @@ xml_head = '''<annotation>
     <!--文件名-->
     <filename>{}</filename>.
     <source>
-        <database>The VOC2007 Database</database>
-        <annotation>PASCAL VOC2007</annotation>
-        <image>flickr</image>
-        <flickrid>325991873</flickrid>
-    </source>
-    <owner>
-        <flickrid>null</flickrid>
-        <name>null</name>
-    </owner>    
+        <database>csi</database>
+    </source> 
     <size>
         <width>{}</width>
         <height>{}</height>
-        <depth>{}</depth>
+        <depth>1</depth>
     </size>
     <segmented>0</segmented>
     '''
 xml_obj = '''
     <object>        
-        <name>{}</name>
+        <name>xuhan</name>
         <pose>Rear</pose>
-        <!--是否被裁减，0表示完整，1表示不完整-->
         <truncated>0</truncated>
-        <!--是否容易识别，0表示容易，1表示困难-->
         <difficult>0</difficult>
-        <!--bounding box的四个坐标-->
         <bndbox>
             <xmin>{}</xmin>
             <ymin>{}</ymin>
@@ -43,7 +33,7 @@ xml_obj = '''
 xml_end = '''
 </annotation>'''
 
-labels = ['A', 'B', 'C']  # label for datasets
+labels = ['xuhan', 'xuhan', 'xuhan']  # label for datasets
 
 cnt = 0
 
