@@ -7,7 +7,8 @@ from pathlib import Path, PurePath
 
 # 8号 325，325
 # 9号 340，320
-# 10号 340，320
+# 10号 318，360
+# resize 1504,640
 
 
 def parse_opt(known=False):
@@ -43,25 +44,26 @@ def show_img(image: Image, show: bool):
 
 if __name__ == "__main__":
     opt = parse_opt(True)
+    h_dynamic = 0
 
-    im_paths = ['/Users/pepsiyoung/Project/CSI/收集数据/预处理图片/10号/10-{}.jpg'.format(str(i).rjust(4, '0')) for i in
-                range(5, 11)]
-
+    # im_paths = ['/Users/pepsiyoung/Project/CSI/收集数据/预处理图片/10号/10-{}.jpg'.format(str(i).rjust(4, '0')) for i in
+    #             range(5, 11)]
+    im_paths = Path(opt.source).glob('**/*.jpg')
     for im_path in tqdm(list(im_paths)):
         im = Image.open(im_path)
         w, h = im.size
         im_name = Path(im_path).stem
 
-        l_x1, l_y1 = opt.left_width, 0
-        l_x2, l_y2 = int(w / 2), h
+        l_x1, l_y1 = opt.left_width, h_dynamic
+        l_x2, l_y2 = int(w / 2), h - h_dynamic
         l_im = im.crop((l_x1, l_y1, l_x2, l_y2))
         l_im = resize_img(l_im)
         # 展示左图
         show_img(l_im, opt.show_left)
         save_img(l_im, '{}_l.jpg'.format(im_name))
 
-        r_x1, r_y1 = int(w / 2), 0
-        r_x2, r_y2 = w - opt.right_width, h
+        r_x1, r_y1 = int(w / 2), h_dynamic
+        r_x2, r_y2 = w - opt.right_width, h - h_dynamic
         r_im = im.crop((r_x1, r_y1, r_x2, r_y2))
         r_im = resize_img(r_im)
         # 展示右图
