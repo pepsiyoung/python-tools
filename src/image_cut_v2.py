@@ -4,7 +4,7 @@ from pathlib import Path, PurePath
 
 
 def parse_opt():
-    with open('./config_v2.yaml', 'r', encoding="utf-8") as f:
+    with open('../config/config_v2.yaml', 'r', encoding="utf-8") as f:
         file_data = f.read()
         data = yaml.load(file_data, Loader=yaml.FullLoader)
         return data
