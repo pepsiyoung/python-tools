@@ -1,0 +1,9 @@
+border:
+  - name: 8
+    px: 42,30,36,51
+  - name: 9
+    px: 50,50,50,50
+activate: 8
+
+source: /Users/pepsiyoung/Downloads/listenSource
+target: /Users/pepsiyoung/Downloads/listenTarget
