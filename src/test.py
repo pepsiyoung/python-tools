@@ -1,13 +1,11 @@
-from PIL import Image
-from pathlib import Path, PurePath
-from tqdm import tqdm
-import os
+import matplotlib.pyplot as plt
+import numpy as np
 
-source_folder = 'F:\deep-learning\datasets\CSI-AIDI\CSI-AIDI\Detection_0\source'
+# data = [10, 20, 30]
+# x = range(len(data))
+# print(len(x))
+#
+# print(range(3))
 
-index = 0
-image_paths = Path(source_folder).glob('**/*.jpg')
-for im_path in tqdm(list(image_paths)):
-    new_name = '{}.png'.format(Path(im_path).stem)
-    new_file_path = Path(source_folder).joinpath(new_name)
-    os.rename(im_path, new_file_path)
+res = zip([1], [2], [3])
+print(type(res))
