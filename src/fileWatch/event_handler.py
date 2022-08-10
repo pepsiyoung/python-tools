@@ -1,6 +1,5 @@
 import yaml
 from pathlib import Path
-from watchdog.observers import Observer
 from watchdog.events import *
 from PIL import Image
 
@@ -20,18 +19,6 @@ def cut(img_path, point):
     x1, y1, x2, y2 = point
     w, h = origin_im.size
     return origin_im.crop((x1, y1, w - x2, h - y2))
-
-
-def start(source_path, target_path):
-    # print('source', source_path)
-    # print('target', target_path)
-
-    print('监听:start')
-    observer = Observer()
-    event_handler = FileEventHandler(target_path)
-    observer.schedule(event_handler, source_path, False)
-    observer.start()
-    observer.join()
 
 
 class FileEventHandler(FileSystemEventHandler):
