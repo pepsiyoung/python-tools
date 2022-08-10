@@ -1,11 +1,8 @@
 import yaml
+from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import *
 from PIL import Image
-
-
-# source = '/Users/pepsiyoung/Downloads/listenSource'
-# target = '/Users/pepsiyoung/Downloads/listenTarget'
 
 
 def coord():
@@ -19,7 +16,7 @@ def coord():
 
 
 def cut(img_path, point):
-    origin_im = Image.open(img_path)
+    origin_im = Image.open(Path(img_path))
     x1, y1, x2, y2 = point
     w, h = origin_im.size
     return origin_im.crop((x1, y1, w - x2, h - y2))

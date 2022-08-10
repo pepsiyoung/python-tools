@@ -57,7 +57,7 @@ class Example(QWidget):
 
 
 if __name__ == '__main__':
-    os.chdir('/Users/pepsiyoung/Project/my/python/python-tools/src/fileWatch')
+    # os.chdir('/Users/pepsiyoung/Project/my/python/python-tools/src/fileWatch')
     print(os.getcwd())
     app = QApplication(sys.argv)
     ex = Example()
