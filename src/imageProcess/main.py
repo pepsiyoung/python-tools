@@ -7,7 +7,11 @@ from pathlib import Path, PurePath
 
 # 8号 325，325
 # 9号 340，320
-# 10号 318，360
+# 10号 318，360 --h-dynamic 15
+# 11号 365,312 --h-dynamic 10 右图 x+10
+# 12号 394,308 左图 x+35  右图 x+40
+# 13号 375,350 左图 x2+18 右图 x1+12 x2+4
+# 14号 295,285 左图 x2+9  右图 x1+5  x2-2
 # resize 1504,640
 
 
@@ -16,6 +20,7 @@ def parse_opt(known=False):
     parser.add_argument('--img-size', nargs='+', type=int, default=None, help='cut size w,h')
     parser.add_argument('--left-width', type=int, default=318, help='截断图片左边px')
     parser.add_argument('--right-width', type=int, default=360, help='截断图片右边px')
+    parser.add_argument('--h-dynamic', type=int, default=0, help='截断图片上下')
     parser.add_argument('--source', type=str, default='./source', help='存放需要裁剪图片的文件夹路径')
     parser.add_argument('--target', default='./target', help='save results to project/name')
     parser.add_argument('--no-save', action='store_true', help='do not save images')
@@ -44,7 +49,7 @@ def show_img(image: Image, show: bool):
 
 if __name__ == "__main__":
     opt = parse_opt(True)
-    h_dynamic = 0
+    h_dynamic = opt.h_dynamic
 
     # im_paths = ['/Users/pepsiyoung/Project/CSI/收集数据/预处理图片/10号/10-{}.jpg'.format(str(i).rjust(4, '0')) for i in
     #             range(5, 11)]
