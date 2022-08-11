@@ -1,7 +1,6 @@
 import argparse
 import shutil
 from pathlib import Path
-from tqdm import tqdm
 
 
 def parse_opt(known=False):
