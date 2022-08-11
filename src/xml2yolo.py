@@ -1,16 +1,15 @@
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as elementTree
+import argparse
 from tqdm import tqdm
-from os import getcwd
-from pathlib import Path, PurePath
+from pathlib import Path
 
-classes = [
-    "crazing",
-    "inclusion",
-    "patches",
-    "pitted_surface",
-    "rolled-in_scale",
-    "scratches",
-]
+
+def parse_opt(known=False):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--classes', nargs='+', type=str, default=['xuhan', 'liepian', 'duanlu'])
+    parser.add_argument('--source', type=str, default='./source')
+    parser.add_argument('--target', type=str, default='./target')
+    return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
 def convert(img_size, box):
@@ -18,8 +17,9 @@ def convert(img_size, box):
     dh = 1. / (img_size[1])
     x = (box[0] + box[1]) / 2.0
     y = (box[2] + box[3]) / 2.0
-    w = box[1] - box[0]
-    h = box[3] - box[2]
+    w = abs(box[1] - box[0])
+    h = abs(box[3] - box[2])
+
     x = x * dw
     w = w * dw
     y = y * dh
@@ -27,10 +27,11 @@ def convert(img_size, box):
     return x, y, w, h
 
 
-def convert_annotation(image_name):
-    in_file = open('./annotations/{}.xml'.format(image_name))
-    out_file = open('./labels/{}.txt'.format(image_name), 'w')
-    tree = ET.parse(in_file)
+def convert_annotation(source_path):
+    classes = opt.classes
+    in_file = open(source_path)
+    out_file = open('{}/{}.txt'.format(opt.target, source_path.stem), 'w')
+    tree = elementTree.parse(in_file)
     root = tree.getroot()
     size = root.find('size')
     w = int(size.find('width').text)
@@ -49,12 +50,8 @@ def convert_annotation(image_name):
         out_file.write(str(cls_id) + " " + " ".join([str(a) for a in bb]) + '\n')
 
 
-wd = getcwd()
-
 if __name__ == "__main__":
-    image_paths = [x for x in Path('./images').iterdir() if PurePath(x).match("*.jpg")]
-    for image_path in tqdm(image_paths):
-        try:
-            convert_annotation(image_path.stem)
-        except FileNotFoundError as e:
-            print(e)
+    opt = parse_opt(True)
+    xml_paths = Path(opt.source).glob('**/*.xml')
+    for xml_path in tqdm(list(xml_paths)):
+        convert_annotation(xml_path)

@@ -1,16 +1,19 @@
-import math
 import argparse
 from PIL import Image
 from tqdm import tqdm
 from pathlib import Path, PurePath
 
 
-# 8号
+# 8号 3568*650
 # python main.py --img-size 1504 640 --left-width 325 --right-width 325
 # 9号
 # python main.py --img-size 1504 640 --left-width 340 --right-width 320
-# 10号
+
+# 10号 3728*680
 # python main.py --img-size 1504 640 --left-width 318 --right-width 360 --h-dynamic 15 15
+# 10号 3728*660
+# python main.py --img-size 1504 640 --left-width 370 --right-width 335  --right-dynamic 0 7 --h-dynamic 20 0
+
 # 11号
 # python main.py --img-size 1504 640 --left-width 360 --right-width 325 --left-dynamic 0 5 --right-dynamic 12 0 --h-dynamic 10 10
 # 12号 3668*650
