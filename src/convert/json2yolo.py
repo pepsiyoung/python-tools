@@ -58,7 +58,6 @@ def parse_opt(known=False):
 
 if __name__ == "__main__":
     opt = parse_opt(True)
-    # json_names = os.listdir(opt.source_folder)
     json_names = [x for x in Path(opt.source_folder).iterdir() if PurePath(x).match("*.json")]
 
     for json_name in tqdm(json_names):
