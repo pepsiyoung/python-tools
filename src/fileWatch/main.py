@@ -82,7 +82,7 @@ class ListenerThread(QThread):
 
     def run(self):
         event_handler = FileEventHandler(self.target)
-        self.observer.schedule(event_handler, self.source, False)
+        self.observer.schedule(event_handler, self.source, True)
         self.observer.start()
         self.observer.join()
 

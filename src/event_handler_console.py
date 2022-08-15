@@ -14,7 +14,7 @@ def parse_opt(known=False):
 
 
 def coord():
-    print(os.getcwd())
+    # print(os.getcwd())
     with open('fileWatch/config_border.yaml', 'r', encoding="utf-8") as f:
         file_data = f.read()
         data = yaml.load(file_data, Loader=yaml.FullLoader)
@@ -36,19 +36,28 @@ class FileEventHandler(FileSystemEventHandler):
         FileSystemEventHandler.__init__(self)
 
     def on_created(self, event):
+        print('on_created:', event.src_path)
         opt = parse_opt(True)
         file_name = os.path.basename(event.src_path)
-        print(file_name)
         if file_name.endswith("jpg"):
             cut_im = cut(event.src_path, coord())
             cut_im.save("{0}/{1}".format(opt.target, file_name))
+
+    def on_modified(self, event):
+        print('on_modified:', event.src_path)
+
+    def on_moved(self, event):
+        print('on_moved:', event.src_path)
+
+    def on_deleted(self, event):
+        print('on_deleted:', event.src_path)
 
 
 if __name__ == "__main__":
     opt = parse_opt(True)
     observer = Observer()
     event_handler = FileEventHandler()
-    observer.schedule(event_handler, opt.source, False)
+    observer.schedule(event_handler, opt.source, True)
     observer.start()
     print('运行')
 
