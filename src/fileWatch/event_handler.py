@@ -2,6 +2,8 @@ import yaml
 from pathlib import Path
 from watchdog.events import *
 from PIL import Image
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def coord():
@@ -27,8 +29,8 @@ class FileEventHandler(FileSystemEventHandler):
         self.target_path = target_path
 
     def on_created(self, event):
+        print('on_created:', event.src_path)
         file_name = os.path.basename(event.src_path)
-        print(file_name)
         if file_name.endswith("jpg"):
             cut_im = cut(event.src_path, coord())
             cut_im.save("{0}/{1}".format(self.target_path, file_name))

@@ -23,7 +23,7 @@ def convert(txt, img_w, img_h):
 
             obj += xml_obj.format(labels[label], xmin, ymin, xmax, ymax)
 
-    xml_path = r'F:\deep-learning\datasets\YOLO可训练数据\CSI-虚焊-292\train\xml'
+    xml_path = r'D:\datasets\CSI_0812\train\xml_labels'
     with open(Path(xml_path).joinpath('{}.xml'.format(name)), 'w') as f_xml:
         f_xml.write(head + obj + xml_end)
 
@@ -59,10 +59,10 @@ xml_obj = '''
 xml_end = '''
 </annotation>'''
 
-labels = ['xuhan', 'xuhan', 'xuhan']  # label for datasets
+labels = ['xuhan', 'liepian', 'duanlu','kong']  # label for datasets
 
-im_paths = r'F:\deep-learning\datasets\YOLO可训练数据\CSI-虚焊-292\train\images'
-txt_paths = Path(r'F:\deep-learning\datasets\YOLO可训练数据\CSI-虚焊-292\train\labels').glob('**/*.txt')
+im_paths = r'D:\datasets\CSI_0812\train\images'
+txt_paths = Path(r'D:\datasets\CSI_0812\train\labels').glob('**/*.txt')
 for txt_path in tqdm(list(txt_paths)):
     txt_name = Path(txt_path).stem
     img_path = Path(im_paths).joinpath('{}.jpg'.format(txt_name))

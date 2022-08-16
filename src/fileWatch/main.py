@@ -62,6 +62,7 @@ class Example(QWidget):
         self.target_label.setText(path)
 
     def listener(self):
+        print('点击按钮')
         if self.btn.text() == '监听':
             self.btn.setText('暂停')
             self.observer = Observer()
@@ -88,7 +89,6 @@ class ListenerThread(QThread):
 
 
 if __name__ == '__main__':
-    os.chdir('/Users/pepsiyoung/Project/my/python/python-tools/src/fileWatch')
     print(os.getcwd())
     app = QApplication(sys.argv)
     ex = Example()
