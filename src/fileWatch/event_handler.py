@@ -3,9 +3,7 @@ import time
 from pathlib import Path
 from watchdog.events import *
 from PIL import Image
-from PIL import ImageFile
-
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+from PIL import UnidentifiedImageError
 
 
 def coord():
@@ -25,6 +23,15 @@ def cut(img_path, point):
     return origin_im.crop((x1, y1, w - x2, h - y2))
 
 
+def valid_image(path):
+    b_valid = True
+    try:
+        Image.open(path).verify()
+    except (UnidentifiedImageError, PermissionError):
+        b_valid = False
+    return b_valid
+
+
 class FileEventHandler(FileSystemEventHandler):
     def __init__(self, target_path):
         FileSystemEventHandler.__init__(self)
@@ -32,13 +39,22 @@ class FileEventHandler(FileSystemEventHandler):
 
     def on_created(self, event):
         print('on_created:', event.src_path)
-        time.sleep(2)
-        print('sleep 2s')
+        # 自旋判断图片完整性，超过 N 秒跳过
+        sleep_count = 0
+        while not valid_image(event.src_path) and sleep_count < 8:
+            time.sleep(0.5)
+            sleep_count += 1
+            print(sleep_count)
 
         try:
-            file_name = os.path.basename(event.src_path)
-            if file_name.endswith("jpg"):
+            suffix = Path(event.src_path).suffix
+            file_name = Path(event.src_path).stem
+            if suffix.endswith("jpg"):
                 cut_im = cut(event.src_path, coord())
-                cut_im.save("{0}/{1}".format(self.target_path, file_name))
+                cur_date = time.strftime("%Y-%m-%d", time.localtime())
+                save_path = Path(self.target_path).joinpath(cur_date)
+                Path(save_path).mkdir(parents=True, exist_ok=True)
+                im_save_path = Path(save_path).joinpath('{}.{}'.format(file_name, suffix))
+                cut_im.save(im_save_path)
         except Exception as err:
-            print(err)
+            print(err, event.src_path)

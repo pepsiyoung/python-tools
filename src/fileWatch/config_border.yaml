@@ -2,5 +2,7 @@ border:
   - name: 8
     px: 42,30,36,51
   - name: 9
-    px: 50,50,50,50
-activate: 8
+    px: 0,28,0,35
+  - name: 10
+    px: 5,25,15,50
+activate: 9

@@ -1,4 +1,3 @@
-import os
 import sys
 
 from PyQt5.QtCore import QCoreApplication, QThread
@@ -62,13 +61,14 @@ class Example(QWidget):
         self.target_label.setText(path)
 
     def listener(self):
-        print('点击按钮')
         if self.btn.text() == '监听':
+            print('文件监听中。。。')
             self.btn.setText('暂停')
             self.observer = Observer()
             self.thread = ListenerThread(self.observer, self.source_label.text(), self.target_label.text())
             self.thread.start()
         else:
+            print('监听结束')
             self.btn.setText('监听')
             self.observer.stop()
 
@@ -89,7 +89,6 @@ class ListenerThread(QThread):
 
 
 if __name__ == '__main__':
-    print(os.getcwd())
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
