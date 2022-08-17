@@ -1,8 +1,10 @@
 import yaml
+import time
 from pathlib import Path
 from watchdog.events import *
 from PIL import Image
 from PIL import ImageFile
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
@@ -30,7 +32,13 @@ class FileEventHandler(FileSystemEventHandler):
 
     def on_created(self, event):
         print('on_created:', event.src_path)
-        file_name = os.path.basename(event.src_path)
-        if file_name.endswith("jpg"):
-            cut_im = cut(event.src_path, coord())
-            cut_im.save("{0}/{1}".format(self.target_path, file_name))
+        time.sleep(2)
+        print('sleep 2s')
+
+        try:
+            file_name = os.path.basename(event.src_path)
+            if file_name.endswith("jpg"):
+                cut_im = cut(event.src_path, coord())
+                cut_im.save("{0}/{1}".format(self.target_path, file_name))
+        except Exception as err:
+            print(err)
