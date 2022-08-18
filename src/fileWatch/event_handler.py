@@ -29,6 +29,8 @@ def valid_image(path):
         Image.open(path).verify()
     except (UnidentifiedImageError, PermissionError):
         b_valid = False
+
+    print('b_valid:', b_valid)
     return b_valid
 
 
@@ -46,6 +48,8 @@ class FileEventHandler(FileSystemEventHandler):
             sleep_count += 1
             print(sleep_count)
 
+        print('开始截图')
+        time.sleep(0.5)
         try:
             suffix = Path(event.src_path).suffix
             file_name = Path(event.src_path).stem
