@@ -1,11 +1,10 @@
 import sys
-
 from PyQt5.QtCore import QCoreApplication, QThread
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QLabel, QMessageBox
 from watchdog.observers import Observer
-
 from event_handler import FileEventHandler
+import my_utils
 
 
 class Example(QWidget):
@@ -18,7 +17,15 @@ class Example(QWidget):
         self.btn = QPushButton('监听', self)
         self.source_label = QLabel(self)
         self.target_label = QLabel(self)
+        self.valid()
         self.initUI()
+
+    def valid(self):
+        license_key = my_utils.get_file_licence()
+        valid = my_utils.valid_licence(license_key)
+        if not valid:
+            QMessageBox.warning(self, "警告", "Licence无效", QMessageBox.Yes)
+            sys.exit(0)
 
     def initUI(self):
         # label控件

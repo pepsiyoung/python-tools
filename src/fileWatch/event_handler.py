@@ -41,6 +41,7 @@ class FileEventHandler(FileSystemEventHandler):
         print('on_created:', event.src_path)
         # 自旋判断图片完整性，超过 N 秒跳过
         sleep_count = 0
+        time.sleep(0.5)
         while not valid_image(event.src_path) and sleep_count < 8:
             time.sleep(0.5)
             sleep_count += 1
