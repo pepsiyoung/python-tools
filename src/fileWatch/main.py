@@ -18,16 +18,17 @@ class Example(QWidget):
         self.source_label = QLabel(self)
         self.target_label = QLabel(self)
         self.valid()
-        self.initUI()
+        self.init_ui()
 
     def valid(self):
+        # 验证License
         license_key = my_utils.get_file_licence()
         valid = my_utils.valid_licence(license_key)
         if not valid:
             QMessageBox.warning(self, "警告", "Licence无效", QMessageBox.Yes)
             sys.exit(0)
 
-    def initUI(self):
+    def init_ui(self):
         # label控件
         self.source_label.setText('请选择监听文件夹')
         self.source_label.move(100, 80)
