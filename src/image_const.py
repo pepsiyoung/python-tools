@@ -23,11 +23,14 @@ if __name__ == '__main__':
 
     for index, im in enumerate(tqdm(im_list[:-1])):
         for next_im in im_list[index + 1:]:
-            diff = ImageChops.difference(im[1], next_im[1])
-            if diff.getbbox() is None:
-                # 相同
-                repeat_list.append(im[0])
-                break
+            try:
+                diff = ImageChops.difference(im[1], next_im[1])
+                if diff.getbbox() is None:
+                    # 相同
+                    repeat_list.append(im[0])
+                    break
+            except ValueError as e:
+                print(e, im[0], next_im[0])
 
     for path in repeat_list:
         shutil.move(path, opt.target)
