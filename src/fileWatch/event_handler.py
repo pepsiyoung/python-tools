@@ -14,7 +14,7 @@ class FileEventHandler(FileSystemEventHandler):
         # 自旋判断图片完整性，超过 N 秒跳过
         sleep_count = 0
         time.sleep(0.5)
-        while not valid_image(event.src_path) and sleep_count < 8:
+        while not valid_image(event.src_path) and sleep_count < 4:
             time.sleep(0.5)
             sleep_count += 1
             print('sleep_count:', sleep_count)
