@@ -17,7 +17,7 @@ class FileEventHandler(FileSystemEventHandler):
         while not valid_image(event.src_path) and sleep_count < 8:
             time.sleep(0.5)
             sleep_count += 1
-            print(sleep_count)
+            print('sleep_count:', sleep_count)
 
         try:
             suffix = Path(event.src_path).suffix

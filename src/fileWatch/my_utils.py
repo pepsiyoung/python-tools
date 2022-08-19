@@ -26,6 +26,12 @@ def cut(img_path, point):
 def valid_image(path):
     b_valid = True
     try:
+        with open(path, 'rb') as f:
+            buf = f.read()
+            if buf[6:10] in (b'JFIF', b'Exif'):
+                if not buf.rstrip(b'\0\r\n').endswith(b'\xff\xd9'):
+                    b_valid = False
+
         Image.open(path).verify()
     except (UnidentifiedImageError, PermissionError, FileNotFoundError):
         b_valid = False
