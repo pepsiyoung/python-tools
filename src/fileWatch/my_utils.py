@@ -27,9 +27,8 @@ def valid_image(path):
     b_valid = True
     try:
         Image.open(path).verify()
-    except (UnidentifiedImageError, PermissionError):
+    except (UnidentifiedImageError, PermissionError, FileNotFoundError):
         b_valid = False
-    print('b_valid:', b_valid)
     return b_valid
 
 
