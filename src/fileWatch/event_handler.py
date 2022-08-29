@@ -27,7 +27,7 @@ class FileEventHandler(FileSystemEventHandler):
                 cur_date = time.strftime("%Y-%m-%d", time.localtime())
                 save_path = Path(self.target_path).joinpath(cur_date)
                 Path(save_path).mkdir(parents=True, exist_ok=True)
-                im_save_path = Path(save_path).joinpath('{}.{}'.format(file_name, suffix))
+                im_save_path = Path(save_path).joinpath('{}{}'.format(file_name, suffix))
                 cut_im.save(im_save_path)
         except Exception as err:
             print(err, event.src_path)
