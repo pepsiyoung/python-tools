@@ -14,7 +14,7 @@ from pathlib import Path, PurePath
 # 10号 3728*660
 # python main.py --img-size 1504 640 --left-width 370 --right-width 335  --right-dynamic 0 7 --h-dynamic 20 0
 
-# 11号
+# 11号 3636*660
 # python main.py --img-size 1504 640 --left-width 360 --right-width 325 --left-dynamic 0 5 --right-dynamic 12 0 --h-dynamic 10 10
 # 12号 3668*650
 # python main.py --img-size 1504 640 --left-width 390 --right-width 308 --left-dynamic 0 30 --right-dynamic 40 0
@@ -32,9 +32,9 @@ def parse_opt(known=False):
     parser.add_argument('--left-width', type=int, default=318, help='截断图片左边px')
     parser.add_argument('--right-width', type=int, default=360, help='截断图片右边px')
 
-    parser.add_argument('--left-dynamic', nargs='+', type=int, default=[0, 0], help='动态调整')
-    parser.add_argument('--right-dynamic', nargs='+', type=int, default=[0, 0], help='动态调整')
-    parser.add_argument('--h-dynamic', nargs='+', type=int, default=[0, 0], help='上下边距动态调整')
+    parser.add_argument('--left-dynamic', nargs='+', type=int, default=[0, 0], help='动态调整左边距')
+    parser.add_argument('--right-dynamic', nargs='+', type=int, default=[0, 0], help='动态调整右边距')
+    parser.add_argument('--h-dynamic', nargs='+', type=int, default=[0, 0], help='动态调整上下边距')
 
     parser.add_argument('--source', type=str, default='./source', help='存放需要裁剪图片的文件夹路径')
     parser.add_argument('--target', default='./target', help='save results to project/name')
