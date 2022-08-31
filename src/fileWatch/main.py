@@ -70,7 +70,7 @@ class Example(QWidget):
 
     def listener(self):
         if self.btn.text() == '监听':
-            print('v2.0.1 文件监听中。。。')
+            print('v2.0.2 文件监听中。。。')
             self.btn.setText('暂停')
             self.observer = Observer()
             self.thread = ListenerThread(self.observer, self.source_label.text(), self.target_label.text())
