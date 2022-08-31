@@ -1,3 +1,13 @@
+from PIL import Image
+import argparse
+
+
+def parse_opt(known=False):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source', type=str, default='./source', help='')
+    return parser.parse_known_args()[0] if known else parser.parse_args()
+
+
 def test(func):
     def handler(*args, ):
         print('test')
@@ -23,4 +33,7 @@ def check_requirements(name):
 
 
 if __name__ == '__main__':
-    check_requirements('vvv')
+    # check_requirements('vvv')
+    opt = parse_opt(True)
+    im = Image.open(opt.source)
+    im.show()
