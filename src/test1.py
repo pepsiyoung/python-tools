@@ -1,6 +1,6 @@
 from PIL import Image
+from pathlib import Path
 import yaml
-
 
 def test(func):
     def handler(*args, ):
@@ -27,4 +27,7 @@ def check_requirements(name):
 
 
 if __name__ == '__main__':
-    check_requirements('vvv')
+    # check_requirements('vvv')
+
+    suffix = Path('/Users/pepsiyoung/Downloads/222.jpg').suffix
+    print(suffix)
