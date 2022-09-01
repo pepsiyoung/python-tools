@@ -9,7 +9,7 @@ def parse_opt(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--train', type=str, default='./train', help='')
     parser.add_argument('--valid', type=str, default='./valid', help='')
-    parser.add_argument('--size', type=float, default=0.08, help='')
+    parser.add_argument('--size', type=float, default=0.1, help='')
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 

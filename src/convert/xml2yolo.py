@@ -6,7 +6,7 @@ from pathlib import Path
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--classes', nargs='+', type=str, default=['xuhan', 'liepian', 'duanlu','kong'])
+    parser.add_argument('--classes', nargs='+', type=str, default=['xuhan', 'liepian', 'duanlu', 'kong'])
     parser.add_argument('--source', type=str, default='./source')
     parser.add_argument('--target', type=str, default='./target')
     return parser.parse_known_args()[0] if known else parser.parse_args()
