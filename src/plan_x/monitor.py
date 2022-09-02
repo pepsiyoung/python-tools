@@ -1,10 +1,26 @@
+import sys
 import time
 import yaml
 from PIL import Image
+from PIL import UnidentifiedImageError
 from pathlib import Path
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
-from fileWatch.my_utils import valid_image
+
+
+def valid_image(path):
+    b_valid = True
+    try:
+        with open(path, 'rb') as f:
+            buf = f.read()
+            if buf[6:10] in (b'JFIF', b'Exif'):
+                if not buf.rstrip(b'\0\r\n').endswith(b'\xff\xd9'):
+                    b_valid = False
+
+        Image.open(path).verify()
+    except (UnidentifiedImageError, PermissionError, FileNotFoundError):
+        b_valid = False
+    return b_valid
 
 
 class EventHandler(FileSystemEventHandler):
