@@ -75,6 +75,12 @@ class Example(QWidget):
         target_wg_btn.clicked.connect(lambda: self.open_target_folder('wg'))
         target_wg_btn.move(550, 200)
 
+        # 测试
+        # self.source_el_label.setText(r"E:\temp\source1")
+        # self.source_wg_label.setText(r"E:\temp\source2")
+        # self.target_el_label.setText(r"E:\temp\target1")
+        # self.target_wg_label.setText(r"E:\temp\target2")
+
         # 功能button
         self.btn.clicked.connect(lambda: self.listener(self.height_edit.text()))
         self.btn.resize(self.btn.sizeHint())
@@ -105,7 +111,7 @@ class Example(QWidget):
 
     def listener(self, height):
         if self.btn.text() == '监听':
-            print('v1.0.1 overturn 文件监听中。。。')
+            print('v1.0.2 overturn 文件监听中。。。')
             self.btn.setText('暂停')
             self.observer_el = Observer()
             self.observer_wg = Observer()

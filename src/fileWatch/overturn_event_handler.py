@@ -26,7 +26,7 @@ class OverturnEventHandler(FileSystemEventHandler):
             suffix = Path(event.src_path).suffix
             file_name = Path(event.src_path).name
             if suffix.endswith("jpg"):
-                im = Image.open(event.src_path)
+                im = Image.open(event.src_path).convert('RGB')
                 w, h = im.size
                 transpose_h = h - self.height
                 cur_date = time.strftime("%Y-%m-%d", time.localtime())

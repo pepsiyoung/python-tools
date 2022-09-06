@@ -1,9 +1,10 @@
 import numpy as np
 from PIL import Image
 
-im = Image.open('/Users/pepsiyoung/Downloads/111.jpg')
-# im_data = np.array(im)
-# print(im_data.shape)
+im = Image.open(r'E:\temp\1.jpg').convert('RGB')
+im_data = np.array(im)
+print(im_data.shape)
+print(im.mode)
 # im_data_new = np.concatenate((im_data[:1400, ::-1, :], im_data[1400:, :, :]), axis=0)
 # print(im_data_new.shape)
 # #
@@ -17,5 +18,4 @@ im = Image.open('/Users/pepsiyoung/Downloads/111.jpg')
 # n3 = np.concatenate((n1, n2), axis=0)
 # print(n3)
 
-a = 'sss'
-print(type(a))
+
