@@ -11,22 +11,28 @@ class OverturnEventHandler(FileSystemEventHandler):
         FileSystemEventHandler.__init__(self)
         self.target_path = target_path
         self.height = height
+        self.last = (None, None)
 
-    def on_created(self, event):
-        print('on_created:', event.src_path)
+    def process(self, path):
+        last_path = self.last[0]
+        last_time = time.time() if self.last[1] is None else self.last[1]
+        # 防抖 如果收到的图像与上一张同名并且在5秒内，就不进行处理
+        if last_path == path and int(time.time() - last_time) < 5:
+            return
+        print('process:', path)
         # 自旋判断图片完整性，超过 N 秒跳过
         sleep_count = 0
         time.sleep(0.5)
-        while not valid_image(event.src_path) and sleep_count < 8:
+        while not valid_image(path) and sleep_count < 8:
             time.sleep(0.5)
             sleep_count += 1
             print('sleep_count:', sleep_count)
 
         try:
-            suffix = Path(event.src_path).suffix
-            file_name = Path(event.src_path).name
+            suffix = Path(path).suffix
+            file_name = Path(path).name
             if suffix.endswith("jpg"):
-                im = Image.open(event.src_path).convert('RGB')
+                im = Image.open(path).convert('RGB')
                 w, h = im.size
                 transpose_h = h - self.height
                 cur_date = time.strftime("%Y-%m-%d", time.localtime())
@@ -37,7 +43,14 @@ class OverturnEventHandler(FileSystemEventHandler):
                 im_np = np.array(im)
                 im_new_np = np.concatenate((im_np[:transpose_h, ::-1, :], im_np[transpose_h:, :, :]), axis=0)
                 Image.fromarray(im_new_np).save(im_save_path)
-
-                # im.transpose(Image.Transpose.FLIP_LEFT_RIGHT).save(im_save_path)
+                self.last = (path, time.time())
         except Exception as err:
-            print(err, event.src_path)
+            print(err, path)
+
+    def on_created(self, event):
+        # print('on_created:', event.src_path)
+        self.process(event.src_path)
+
+    def on_modified(self, event):
+        # print('on_modified:', event.src_path)
+        self.process(event.src_path)
