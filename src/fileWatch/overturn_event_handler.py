@@ -16,8 +16,8 @@ class OverturnEventHandler(FileSystemEventHandler):
     def process(self, path):
         last_path = self.last[0]
         last_time = time.time() if self.last[1] is None else self.last[1]
-        # 防抖 如果收到的图像与上一张同名并且在5秒内，就不进行处理
-        if last_path == path and int(time.time() - last_time) < 5:
+        # 防抖 如果收到的图像与上一张同名并且在3秒内，就不进行处理
+        if last_path == path and int(time.time() - last_time) < 3:
             return
         print('process:', path)
         # 自旋判断图片完整性，超过 N 秒跳过
@@ -48,9 +48,15 @@ class OverturnEventHandler(FileSystemEventHandler):
             print(err, path)
 
     def on_created(self, event):
-        # print('on_created:', event.src_path)
+        print('on_created:', event.src_path)
         self.process(event.src_path)
 
     def on_modified(self, event):
-        # print('on_modified:', event.src_path)
+        print('on_modified:', event.src_path)
         self.process(event.src_path)
+
+    def on_moved(self, event):
+        print('on_moved:', event.src_path)
+
+    def on_deleted(self, event):
+        print('on_deleted:', event.src_path)

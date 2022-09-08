@@ -91,7 +91,7 @@ class Example(QWidget):
         self.quit_btn.move(520, 300)
 
         self.setGeometry(300, 300, 800, 400)
-        self.setWindowTitle('overturn')
+        self.setWindowTitle('overturn_v1.2.1')
         self.setWindowIcon(QIcon('./icon.png'))
         self.show()
 
@@ -111,7 +111,7 @@ class Example(QWidget):
 
     def listener(self, height):
         if self.btn.text() == '监听':
-            print('v1.1.2 overturn 文件监听中。。。')
+            print('v1.2.1 overturn 文件监听中。。。')
             self.btn.setText('暂停')
             self.observer_el = Observer()
             self.observer_wg = Observer()
