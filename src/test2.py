@@ -1,10 +1,11 @@
 import numpy as np
 from PIL import Image
+from pathlib import Path
 
-im = Image.open(r'E:\temp\1.jpg').convert('RGB')
-im_data = np.array(im)
-print(im_data.shape)
-print(im.mode)
+# im = Image.open(r'E:\temp\1.jpg').convert('RGB')
+# im_data = np.array(im)
+# print(im_data.shape)
+# print(im.mode)
 # im_data_new = np.concatenate((im_data[:1400, ::-1, :], im_data[1400:, :, :]), axis=0)
 # print(im_data_new.shape)
 # #
@@ -19,3 +20,6 @@ print(im.mode)
 # print(n3)
 
 
+p = Path(r"F:\temp\source2\123.jpg")
+print(p)
+print(p.parent)

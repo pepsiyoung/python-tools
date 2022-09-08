@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QLa
 from watchdog.observers import Observer
 from overturn_event_handler import OverturnEventHandler
 import my_utils
+from overturn_global_var import init as global_val_init
+from overturn_global_var import set_value, get_value
 
 
 # 图像水平翻转
@@ -13,10 +15,8 @@ class Example(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.thread_el = None
-        self.thread_wg = None
-        self.observer_el = None
-        self.observer_wg = None
+        self.thread = None
+        self.observer = None
         self.btn = QPushButton('监听', self)
         self.quit_btn = QPushButton('退出', self)
         self.source_el_label = QLabel(self)
@@ -24,10 +24,10 @@ class Example(QWidget):
         self.target_el_label = QLabel(self)
         self.target_wg_label = QLabel(self)
         self.height_edit = QLineEdit(self)
-        self.valid()
+        self.license_valid()
         self.init_ui()
 
-    def valid(self):
+    def license_valid(self):
         # 验证License
         license_key = my_utils.get_file_licence()
         valid = my_utils.valid_licence(license_key)
@@ -76,13 +76,13 @@ class Example(QWidget):
         target_wg_btn.move(550, 200)
 
         # 测试
-        self.source_el_label.setText(r"E:\temp\source1")
-        self.source_wg_label.setText(r"E:\temp\source2")
-        self.target_el_label.setText(r"E:\temp\target1")
-        self.target_wg_label.setText(r"E:\temp\target2")
+        self.source_el_label.setText(r"F:\temp\source1")
+        self.source_wg_label.setText(r"F:\temp\source2")
+        self.target_el_label.setText(r"F:\temp\target1")
+        self.target_wg_label.setText(r"F:\temp\target2")
 
         # 功能button
-        self.btn.clicked.connect(lambda: self.listener(self.height_edit.text()))
+        self.btn.clicked.connect(self.listener_click)
         self.btn.resize(self.btn.sizeHint())
         self.btn.move(220, 300)
 
@@ -91,7 +91,7 @@ class Example(QWidget):
         self.quit_btn.move(520, 300)
 
         self.setGeometry(300, 300, 800, 400)
-        self.setWindowTitle('overturn_v1.2.1')
+        self.setWindowTitle('overturn_v1.3.0')
         self.setWindowIcon(QIcon('./icon.png'))
         self.show()
 
@@ -109,42 +109,39 @@ class Example(QWidget):
         else:
             self.target_wg_label.setText(path)
 
-    def listener(self, height):
+    def listener_click(self):
         if self.btn.text() == '监听':
-            print('v1.2.1 overturn 文件监听中。。。')
+            print('v1.3.0 overturn 文件监听中。。。')
             self.btn.setText('暂停')
-            self.observer_el = Observer()
-            self.observer_wg = Observer()
-            self.thread_el = ListenerThread(self.observer_el, self.source_el_label.text(), self.target_el_label.text(),
-                                            int(height))
-            self.thread_wg = ListenerThread(self.observer_wg, self.source_wg_label.text(), self.target_wg_label.text(),
-                                            int(height))
-            self.thread_el.start()
-            self.thread_wg.start()
+            set_value('source_el_dir', self.source_el_label.text())
+            set_value('source_wg_dir', self.source_wg_label.text())
+            set_value('target_el_dir', self.target_el_label.text())
+            set_value('target_wg_dir', self.target_wg_label.text())
+            set_value('height', int(self.height_edit.text()))
+            self.observer = Observer()
+            self.thread = ListenerThread(self.observer)
+            self.thread.start()
         else:
             print('监听结束')
             self.btn.setText('监听')
-            self.observer_el.stop()
-            self.observer_wg.stop()
+            self.observer.stop()
 
 
 class ListenerThread(QThread):
 
-    def __init__(self, observer, source, target, height):
+    def __init__(self, observer):
         super(ListenerThread, self).__init__()
         self.observer = observer
-        self.source = source
-        self.target = target
-        self.height = height
 
     def run(self):
-        event_handler = OverturnEventHandler(self.target, self.height)
-        self.observer.schedule(event_handler, self.source, True)
+        event_handler = OverturnEventHandler()
+        self.observer.schedule(event_handler, get_value('source_wg_dir'), False)
         self.observer.start()
         self.observer.join()
 
 
 if __name__ == '__main__':
+    global_val_init()
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
