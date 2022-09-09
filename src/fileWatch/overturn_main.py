@@ -55,7 +55,7 @@ class Example(QWidget):
 
         self.height_edit.setValidator(QIntValidator())
         self.height_edit.setMaxLength(4)
-        self.height_edit.setText('80')
+        self.height_edit.setText('110')
         self.height_edit.move(100, 250)
 
         # 选择目录控件
@@ -76,10 +76,10 @@ class Example(QWidget):
         target_wg_btn.move(550, 200)
 
         # 测试
-        self.source_el_label.setText(r"F:\temp\source1")
-        self.source_wg_label.setText(r"F:\temp\source2")
-        self.target_el_label.setText(r"F:\temp\target1")
-        self.target_wg_label.setText(r"F:\temp\target2")
+        # self.source_el_label.setText(r"E:\temp\source1")
+        # self.source_wg_label.setText(r"E:\temp\source2")
+        # self.target_el_label.setText(r"E:\temp\target1")
+        # self.target_wg_label.setText(r"E:\temp\target2")
 
         # 功能button
         self.btn.clicked.connect(self.listener_click)

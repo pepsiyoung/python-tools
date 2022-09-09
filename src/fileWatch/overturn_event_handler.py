@@ -1,9 +1,7 @@
 import time
-import numpy as np
-from PIL import Image
+import my_utils
 from pathlib import Path
 from watchdog.events import FileSystemEventHandler
-from my_utils import valid_image
 from overturn_global_var import get_value
 
 
@@ -30,36 +28,13 @@ class OverturnEventHandler(FileSystemEventHandler):
             target_el_path = Path(get_value('target_el_dir')).joinpath(cur_date).joinpath(im_name)
             target_wg_path = Path(get_value('target_wg_dir')).joinpath(cur_date).joinpath(im_name)
 
-            OverturnEventHandler.spin_im(source_wg_path)
-            OverturnEventHandler.transpose_save(source_wg_path, target_wg_path, height)
+            my_utils.spin_im(source_wg_path)
+            my_utils.transpose_save(source_wg_path, target_wg_path, height)
 
-            OverturnEventHandler.spin_im(source_el_path)
-            OverturnEventHandler.transpose_save(source_el_path, target_el_path, height)
+            my_utils.spin_im(source_el_path)
+            my_utils.transpose_save(source_el_path, target_el_path, height)
 
             self.last = (path, time.time())
-
-    @staticmethod
-    def spin_im(path):
-        # 自旋判断图片完整性，超过 N 秒直接执行
-        sleep_count = 0
-        time.sleep(0.5)
-        while not valid_image(path) and sleep_count < 8:
-            time.sleep(0.5)
-
-    @staticmethod
-    def transpose_save(source_path, target_path, height):
-        # 水平翻转图像并保存
-        print('transpose:', source_path)
-        try:
-            im = Image.open(source_path).convert('RGB')
-            w, h = im.size
-            transpose_h = h - height
-            Path(target_path).parent.mkdir(parents=True, exist_ok=True)
-            im_np = np.array(im)
-            im_new_np = np.concatenate((im_np[:transpose_h, ::-1, :], im_np[transpose_h:, :, :]), axis=0)
-            Image.fromarray(im_new_np).save(target_path)
-        except Exception as err:
-            print(err, source_path)
 
     def on_created(self, event):
         print('on_created:', event.src_path)
