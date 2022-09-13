@@ -24,13 +24,16 @@ from PIL import Image
 class ImageProcess:
 
     @staticmethod
-    def cut_middle(im_path, middle):
+    def cut_middle(im_path, middle_px):
         im = Image.open(im_path)
         w, h = im.size
-        left_im = im.crop((0, 0, middle, h))
-        right_im = im.crop((middle, 0, w, h))
-        return left_im, right_im
+        return im.crop((0, 0, middle_px, h)), im.crop((middle_px, 0, w, h))
+
+    @staticmethod
+    def cut_around(im: Image, box):
+        print(type(im))
 
 
 if __name__ == "__main__":
-    left_im, right_im = ImageProcess.cut_middle(r"E:\DataCollect\8.7裂片原图_08_3568\8-000655-A.jpg", 3572)
+    left_im, right_im = ImageProcess.cut_middle(r"E:\DataCollect\8.7裂片原图_08_3568\8-000655-A.jpg", 1788)
+    ImageProcess.cut_around(left_im)

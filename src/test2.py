@@ -20,6 +20,17 @@ from pathlib import Path
 # print(n3)
 
 
-p = Path(r"F:\temp\source2\123.jpg")
-print(p)
-print(p.parent)
+# def a():
+#     param = 'b'  # 这里就会出现这样的提示，因为在main定义的param对象被重新指定了新的值
+#     print(param)
+#
+#
+# if __name__ == '__main__':
+#     param = 'a'
+#     a()
+
+
+a = (1, 2, 3, 4)
+
+for item in a:
+    print(type(item))
