@@ -1,10 +1,11 @@
 import numpy as np
 from PIL import Image
+from pathlib import Path
 
-im = Image.open(r'E:\temp\1.jpg').convert('RGB')
-im_data = np.array(im)
-print(im_data.shape)
-print(im.mode)
+# im = Image.open(r'E:\temp\1.jpg').convert('RGB')
+# im_data = np.array(im)
+# print(im_data.shape)
+# print(im.mode)
 # im_data_new = np.concatenate((im_data[:1400, ::-1, :], im_data[1400:, :, :]), axis=0)
 # print(im_data_new.shape)
 # #
@@ -19,3 +20,17 @@ print(im.mode)
 # print(n3)
 
 
+# def a():
+#     param = 'b'  # 这里就会出现这样的提示，因为在main定义的param对象被重新指定了新的值
+#     print(param)
+#
+#
+# if __name__ == '__main__':
+#     param = 'a'
+#     a()
+
+
+a = (1, 2, 3, 4)
+
+for item in a:
+    print(type(item))

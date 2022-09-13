@@ -1,5 +1,7 @@
 import uuid
 import yaml
+import time
+import numpy as np
 from hashlib import md5
 from pathlib import Path
 from PIL import Image
@@ -60,3 +62,26 @@ def get_sys_licence():
 
 def valid_licence(licence):
     return licence == get_sys_licence()
+
+
+def spin_im(path):
+    # 自旋判断图片完整性，超过 N 秒直接跳过
+    sleep_count = 0
+    time.sleep(0.5)
+    while not valid_image(path) and sleep_count < 8:
+        time.sleep(0.5)
+
+
+def transpose_save(source_path, target_path, height):
+    # 水平翻转图像并保存
+    print('transpose:', source_path)
+    try:
+        im = Image.open(source_path).convert('RGB')
+        w, h = im.size
+        transpose_h = h - height
+        Path(target_path).parent.mkdir(parents=True, exist_ok=True)
+        im_np = np.array(im)
+        im_new_np = np.concatenate((im_np[:transpose_h, ::-1, :], im_np[transpose_h:, :, :]), axis=0)
+        Image.fromarray(im_new_np).save(target_path)
+    except Exception as err:
+        print(err, source_path)
