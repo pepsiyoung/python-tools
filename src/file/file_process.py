@@ -24,11 +24,19 @@ def parse_opt(known=False):
     parser.add_argument('--machine-no', type=int, required=True, help='机台号')
     parser.add_argument('--source', type=str, default='./source', help='存放需要裁剪图片的文件夹路径')
     parser.add_argument('--target', default='./target', help='save results to project/name')
-    parser.add_argument('--resize', nargs='+', type=int, default=[1728, 576], help='cut size w,h')
+    parser.add_argument('--resize', nargs='+', type=int, default=[1728, 608], help='cut size w,h')
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
-config_map = {8: {'middle_px': 1788, 'left_box': (48, 14, 0, 50), 'right_box': (0, 14, 30, 45), 'resize': (1728, 576)}}
+config_map = {
+    8: {'middle_px': 1788, 'left_box': (48, 14, 0, 30), 'right_box': (0, 14, 30, 25)},
+    9: {'middle_px': 1760, 'left_box': (55, 25, 0, 25), 'right_box': (0, 25, 35, 12)},
+    10: {'middle_px': 1864, 'left_box': (10, 25, 12, 30), 'right_box': (0, 34, 75, 40)},
+    11: {'middle_px': 1832, 'left_box': (65, 30, 0, 35), 'right_box': (10, 30, 30, 25)},
+    12: {'middle_px': 1876, 'left_box': (95, 20, 5, 20), 'right_box': (0, 15, 20, 20)},
+    13: {'middle_px': 1852, 'left_box': (90, 5, 0, 0), 'right_box': (0, 5, 48, 0)},
+    14: {'middle_px': 1740, 'left_box': (40, 25, 0, 30), 'right_box': (0, 30, 0, 45)}
+}
 
 if __name__ == "__main__":
     opt = parse_opt(True)
@@ -36,14 +44,32 @@ if __name__ == "__main__":
     middle = config['middle_px']
     left_box = config['left_box']
     right_box = config['right_box']
-    resize = config['resize']
+    resize = opt.resize
     Path(opt.target).mkdir(parents=True, exist_ok=True)
 
-    im_paths = Path(opt.source).glob('**/*.jpg')
-    for im_path in tqdm(list(im_paths)):
-        cut_im = ImageProcess.cut_middle(im_path, middle)
-        im_list = zip(cut_im, (left_box, right_box))
-        for item in im_list:
-            item_im = ImageProcess.cut_around(item[0], item[1])
-            resize_im = item_im.resize(resize, Image.Resampling.LANCZOS)
-            resize_im.show()
+    im_paths = list(Path(opt.source).glob('**/*.jpg'))
+    for im_path in tqdm(im_paths):
+        im_list = zip(ImageProcess.cut_middle(im_path, middle), (left_box, right_box))
+        # 原图一张裁剪为二张，针对每张图进行边缘剪裁，最终转换为GRB三通道图并重命名
+        for index, item in enumerate(im_list):
+            item_im, item_box = item
+            cut_im = ImageProcess.cut_around(item_im, item_box)
+            resize_im = cut_im.resize(resize, Image.Resampling.LANCZOS)
+            save_path = Path(opt.target).joinpath('{}_{}.jpg'.format(im_path.stem, index))
+            resize_im.convert('RGB').save(save_path)
+
+# 测试用
+# im_path = r"E:\DataProcess\8.7裂片原图_14_3460\14-004838-B.jpg"
+# middle = 1740
+# left_box = (40, 25, 0, 30)
+# right_box = (0, 30, 0, 45)
+#
+# l_im, r_im = ImageProcess.cut_middle(im_path, middle)
+# # l_im.show()
+# # r_im.show()
+# left_around_im = ImageProcess.cut_around(l_im, left_box)
+# right_around_im = ImageProcess.cut_around(r_im, right_box)
+# left_around_im.show()
+# right_around_im.show()
+# print(left_around_im.size)
+# print(right_around_im.size)
