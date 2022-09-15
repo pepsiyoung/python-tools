@@ -15,6 +15,7 @@ class Example(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.version = 'v1.3.1'
         self.thread = None
         self.observer = None
         self.btn = QPushButton('监听', self)
@@ -76,10 +77,10 @@ class Example(QWidget):
         target_wg_btn.move(550, 200)
 
         # 测试
-        # self.source_el_label.setText(r"E:\temp\source1")
-        # self.source_wg_label.setText(r"E:\temp\source2")
-        # self.target_el_label.setText(r"E:\temp\target1")
-        # self.target_wg_label.setText(r"E:\temp\target2")
+        self.source_el_label.setText(r"E:\temp\source1")
+        self.source_wg_label.setText(r"E:\temp\source2")
+        self.target_el_label.setText(r"E:\temp\target1")
+        self.target_wg_label.setText(r"E:\temp\target2")
 
         # 功能button
         self.btn.clicked.connect(self.listener_click)
@@ -91,7 +92,7 @@ class Example(QWidget):
         self.quit_btn.move(520, 300)
 
         self.setGeometry(300, 300, 800, 400)
-        self.setWindowTitle('overturn_v1.3.0')
+        self.setWindowTitle(f'overturn_{self.version}')
         self.setWindowIcon(QIcon('./icon.png'))
         self.show()
 
@@ -111,7 +112,7 @@ class Example(QWidget):
 
     def listener_click(self):
         if self.btn.text() == '监听':
-            print('v1.3.0 overturn 文件监听中。。。')
+            print(f'{self.version} overturn 文件监听中。。。')
             self.btn.setText('暂停')
             set_value('source_el_dir', self.source_el_label.text())
             set_value('source_wg_dir', self.source_wg_label.text())

@@ -1,21 +1,17 @@
-class Father:
-    def __init__(self):
-        print('father')
-
-    # def getName(self):
-    #     return 'Father ' + self.name
+from pathlib import Path
+from fileWatch.lru_cache import LRUCache
 
 
-class Son(Father):
+class Person:
     def __init__(self, name):
-        super(Son, self).__init__()
-        print("hi")
         self.name = name
 
-    def getName(self):
-        return 'Son ' + self.name
+    @LRUCache.auto_cache
+    def run(self, age):
+        print('run', self.name, age)
 
 
-if __name__ == '__main__':
-    son = Son('runoob')
-    print(son.getName())
+p = Person('zcy')
+p.run(18)
+
+p.run(20)
