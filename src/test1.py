@@ -12,6 +12,17 @@ def test(func):
     return handler
 
 
+def say_hello(country):
+    def wrapper(func):
+        def decorate(*args, **kw):
+            print('country:', country)
+            func(*args, **kw)
+
+        return decorate
+
+    return wrapper
+
+
 # def try_except(func):
 #     # try-except function. Usage: @try_except decorator
 #     def handler(*args, **kwargs):
@@ -23,10 +34,15 @@ def test(func):
 #     return handler
 
 
-@test
+# @test
+country = 'usa'
+
+
+@say_hello(country)
 def check_requirements(name):
     print('check_requirements:' + name)
 
 
 if __name__ == '__main__':
     check_requirements('zcy')
+    check_requirements('ccc')

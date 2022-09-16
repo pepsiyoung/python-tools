@@ -3,7 +3,7 @@ from pathlib import Path
 from tqdm import tqdm
 
 if __name__ == "__main__":
-    source = r'E:\DataProcess\裂片'
+    source = r'E:\DataSample\4_sample_0831\labels'
     labels = ['xu_han', 'lie', 'duan_lu', 'kong']
 
     values_cnt = {}
@@ -19,11 +19,12 @@ if __name__ == "__main__":
                 values_cnt[value] = values_cnt.get(value, 0) + 1
 
     data = values_cnt.values()
-    # 显示数据标签
-    for x, y in zip(range(len(data)), data):
-        plt.text(x, y, '%.0f' % y, ha='center', va='bottom', )
-
-    plt.bar(range(len(data)), data, tick_label=labels)
-    # 字体设置
+    print(data)
+    # # 显示数据标签
+    # for x, y in zip(range(len(data)), data):
+    #     plt.text(x, y, '%.0f' % y, ha='center', va='bottom', )
+    #
+    # plt.bar(range(len(data)), data, tick_label=labels)
+    # # 字体设置
     # plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
-    plt.show()
+    # plt.show()
