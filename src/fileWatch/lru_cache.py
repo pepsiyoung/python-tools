@@ -46,3 +46,18 @@ class LRUCache(OrderedDict):
             cache.set(*args[0], time.time())
 
         return handler
+
+    @staticmethod
+    def run(lru_list):
+        def wrapper(func):
+            def decorate(*args):
+                path = args[1].src_path
+                val = lru_list.get(path)
+                if val is not None and int(time.time() - val) < 3:
+                    return
+                func(*args)
+                lru_list.set(path, time.time())
+
+            return decorate
+
+        return wrapper
