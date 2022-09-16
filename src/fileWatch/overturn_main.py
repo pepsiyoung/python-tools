@@ -15,7 +15,7 @@ class Example(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.version = 'v1.3.1'
+        self.version = 'v1.3.2'
         self.thread = None
         self.observer = None
         self.btn = QPushButton('监听', self)
@@ -82,10 +82,10 @@ class Example(QWidget):
         # self.target_el_label.setText(r"E:\temp\target1")
         # self.target_wg_label.setText(r"E:\temp\target2")
 
-        self.source_el_label.setText(r'\\10.245.84.184\el1\EL')
-        self.source_wg_label.setText(r'\\10.245.84.184\el1\WG')
-        self.target_el_label.setText(r'D:\temp\target1')
-        self.target_wg_label.setText(r'D:\temp\target2')
+        # self.source_el_label.setText(r'\\10.245.84.184\el1\EL')
+        # self.source_wg_label.setText(r'\\10.245.84.184\el1\WG')
+        # self.target_el_label.setText(r'D:\temp\target1')
+        # self.target_wg_label.setText(r'D:\temp\target2')
 
         # 功能button
         self.btn.clicked.connect(self.listener_click)

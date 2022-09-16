@@ -16,7 +16,7 @@ class OverturnEventHandler(FileSystemEventHandler):
     @staticmethod
     def build_im_name(im_stem):
         im_count = len(list(Path(get_value('target_wg_dir')).glob(f'**/{im_stem}*.jpg')))
-        print('im_count', im_count)
+        # print('im_count', im_count)
         if im_count == 0:
             return f'{im_stem}.jpg'
         else:

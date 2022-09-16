@@ -1,17 +1,15 @@
+import time
 from pathlib import Path
 from fileWatch.lru_cache import LRUCache
 
+lru_list = LRUCache(3)
 
-class Person:
-    def __init__(self, name):
-        self.name = name
+lru_list.set('xxx', 123)
+lru_list.set('yyy', 123)
+lru_list.set('zzz', 123)
 
-    @LRUCache.auto_cache
-    def run(self, age):
-        print('run', self.name, age)
+lru_list.set('AAA', 123)
+lru_list.set('AAA', 456)
 
-
-p = Person('zcy')
-p.run(18)
-
-p.run(20)
+print(lru_list)
+# print(lru_list.get('AAA'))

@@ -21,7 +21,7 @@ class LRUCache(OrderedDict):
 
     def set(self, key, value):
         if key in self.cache:
-            value = self.cache.pop(key)
+            self.cache.pop(key)
             self.cache[key] = value
         else:
             if len(self.cache) == self.capacity:
@@ -53,10 +53,10 @@ class LRUCache(OrderedDict):
             def decorate(*args):
                 path = args[1].src_path
                 val = lru_list.get(path)
-                if val is not None and int(time.time() - val) < 3:
+                if val is not None and int(time.time()) - val < 3:
                     return
                 func(*args)
-                lru_list.set(path, time.time())
+                lru_list.set(path, int(time.time()))
 
             return decorate
 
