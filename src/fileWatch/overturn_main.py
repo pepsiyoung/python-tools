@@ -77,10 +77,15 @@ class Example(QWidget):
         target_wg_btn.move(550, 200)
 
         # 测试
-        self.source_el_label.setText(r"E:\temp\source1")
-        self.source_wg_label.setText(r"E:\temp\source2")
-        self.target_el_label.setText(r"E:\temp\target1")
-        self.target_wg_label.setText(r"E:\temp\target2")
+        # self.source_el_label.setText(r"E:\temp\source1")
+        # self.source_wg_label.setText(r"E:\temp\source2")
+        # self.target_el_label.setText(r"E:\temp\target1")
+        # self.target_wg_label.setText(r"E:\temp\target2")
+
+        self.source_el_label.setText(r'\\10.245.84.184\el1\EL')
+        self.source_wg_label.setText(r'\\10.245.84.184\el1\WG')
+        self.target_el_label.setText(r'D:\temp\target1')
+        self.target_wg_label.setText(r'D:\temp\target2')
 
         # 功能button
         self.btn.clicked.connect(self.listener_click)
