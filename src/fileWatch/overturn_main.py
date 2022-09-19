@@ -15,9 +15,10 @@ class Example(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.version = 'v1.3.2'
-        self.thread = None
-        self.observer = None
+        self.version = 'v2.0.0'
+        # self.thread = None
+        self.observer_el = None
+        self.observer_wg = None
         self.btn = QPushButton('监听', self)
         self.quit_btn = QPushButton('退出', self)
         self.source_el_label = QLabel(self)
@@ -119,29 +120,34 @@ class Example(QWidget):
         if self.btn.text() == '监听':
             print(f'{self.version} overturn 文件监听中。。。')
             self.btn.setText('暂停')
-            set_value('source_el_dir', self.source_el_label.text())
-            set_value('source_wg_dir', self.source_wg_label.text())
-            set_value('target_el_dir', self.target_el_label.text())
-            set_value('target_wg_dir', self.target_wg_label.text())
+            # set_value('source_el_dir', self.source_el_label.text())
+            # set_value('source_wg_dir', self.source_wg_label.text())
+            # set_value('target_el_dir', self.target_el_label.text())
+            # set_value('target_wg_dir', self.target_wg_label.text())
             set_value('height', int(self.height_edit.text()))
-            self.observer = Observer()
-            self.thread = ListenerThread(self.observer)
-            self.thread.start()
+
+            self.observer_el = Observer()
+            self.observer_wg = Observer()
+            thread_el = ListenerThread(self.observer_el, self.source_el_label.text(), self.target_el_label.text())
+            thread_wg = ListenerThread(self.observer_wg, self.source_wg_label.text(), self.target_wg_label.text())
+            thread_el.start()
+            thread_wg.start()
         else:
             print('监听结束')
             self.btn.setText('监听')
-            self.observer.stop()
+            self.observer_el.stop()
 
 
 class ListenerThread(QThread):
 
-    def __init__(self, observer):
+    def __init__(self, observer, source_dir, target_dir):
         super(ListenerThread, self).__init__()
         self.observer = observer
+        self.source_dir = source_dir
+        self.target_dir = target_dir
 
     def run(self):
-        event_handler = OverturnEventHandler()
-        self.observer.schedule(event_handler, get_value('source_wg_dir'), False)
+        self.observer.schedule(OverturnEventHandler(self.source_dir, self.target_dir), self.source_dir, False)
         self.observer.start()
         self.observer.join()
 
