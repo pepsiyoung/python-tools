@@ -15,8 +15,9 @@ class Example(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.version = 'v2.0.0'
-        # self.thread = None
+        self.version = 'v2.0.1'
+        self.thread_el = None
+        self.thread_wg = None
         self.observer_el = None
         self.observer_wg = None
         self.btn = QPushButton('监听', self)
@@ -83,10 +84,10 @@ class Example(QWidget):
         # self.target_el_label.setText(r"E:\temp\target1")
         # self.target_wg_label.setText(r"E:\temp\target2")
 
-        # self.source_el_label.setText(r'\\10.245.84.184\el1\EL')
-        # self.source_wg_label.setText(r'\\10.245.84.184\el1\WG')
-        # self.target_el_label.setText(r'D:\temp\target1')
-        # self.target_wg_label.setText(r'D:\temp\target2')
+        self.source_el_label.setText(r'\\10.245.84.184\el1\EL')
+        self.source_wg_label.setText(r'\\10.245.84.184\el1\WG')
+        self.target_el_label.setText(r'D:\temp\target1')
+        self.target_wg_label.setText(r'D:\temp\target2')
 
         # 功能button
         self.btn.clicked.connect(self.listener_click)
@@ -128,10 +129,11 @@ class Example(QWidget):
 
             self.observer_el = Observer()
             self.observer_wg = Observer()
-            thread_el = ListenerThread(self.observer_el, self.source_el_label.text(), self.target_el_label.text())
-            thread_wg = ListenerThread(self.observer_wg, self.source_wg_label.text(), self.target_wg_label.text())
-            thread_el.start()
-            thread_wg.start()
+            self.thread_el = ListenerThread(self.observer_el, self.source_el_label.text(), self.target_el_label.text())
+            self.thread_wg = ListenerThread(self.observer_wg, self.source_wg_label.text(), self.target_wg_label.text())
+
+            self.thread_el.start()
+            self.thread_wg.start()
         else:
             print('监听结束')
             self.btn.setText('监听')
