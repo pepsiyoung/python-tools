@@ -1,10 +1,20 @@
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
+import argparse
 from pathlib import Path
 from tqdm import tqdm
 
+
+def parse_opt(known=False):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source', type=str, required=True, help='labels存放的位置')
+    parser.add_argument('--labels', type=str, nargs='+', default=['xuhan1', 'xuhan2', 'liewen', 'duanlu'])
+    return parser.parse_known_args()[0] if known else parser.parse_args()
+
+
 if __name__ == "__main__":
-    source = r'E:\DataSample\4_sample_0831\labels'
-    labels = ['xu_han', 'lie', 'duan_lu', 'kong']
+    opt = parse_opt(True)
+    source = opt.source
+    labels = opt.labels
 
     values_cnt = {}
     for index, label in enumerate(labels):
@@ -20,6 +30,7 @@ if __name__ == "__main__":
 
     data = values_cnt.values()
     print(data)
+
     # # 显示数据标签
     # for x, y in zip(range(len(data)), data):
     #     plt.text(x, y, '%.0f' % y, ha='center', va='bottom', )
