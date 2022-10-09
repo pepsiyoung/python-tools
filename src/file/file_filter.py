@@ -5,7 +5,7 @@ from pathlib import Path
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type=str, default='./source', help='源文件夹')
+    parser.add_argument('--source', type=str, default='./source', help='源文件夹 images和labels在一个文件夹内')
     parser.add_argument('--target', default='./target', help='目标文件夹')
     parser.add_argument('--suffix', default='txt', help='搜索文件后缀')
     return parser.parse_known_args()[0] if known else parser.parse_args()

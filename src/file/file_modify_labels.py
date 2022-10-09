@@ -5,8 +5,8 @@ from tqdm import tqdm
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type=str, default=r'E:\DataSample\4_sample_0831\labels', help='源文件夹')
-    parser.add_argument('--target', default=r'E:\DataSample\4_sample_0831\target', help='目标文件夹')
+    parser.add_argument('--source', type=str, default=r'E:\DataProcess\4_sample_0812\labels', help='源文件夹')
+    parser.add_argument('--target', default=r'E:\DataProcess\4_sample_0812\4_labels', help='目标文件夹')
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
@@ -21,6 +21,8 @@ if __name__ == '__main__':
         file_data = ''
         with open(file, 'r') as f:
             for line in f:
+                if not line[0].isdigit():
+                    print(file)
                 old_category = int(line[0])
                 new_category = replace_map.get(old_category)
                 file_data += line if new_category is None else f'{new_category}{line[1:]}'
