@@ -6,6 +6,8 @@ from watchdog.observers import Observer
 from event_handler import FileEventHandler
 import my_utils
 
+version = 'v2.1.0'
+
 
 class Example(QWidget):
 
@@ -37,6 +39,11 @@ class Example(QWidget):
         self.target_label.move(100, 150)
         self.target_label.setFixedWidth(400)
 
+        source_dir = my_utils.get_config('source_dir')
+        target_dir = my_utils.get_config('target_dir')
+        self.source_label.setText(source_dir)
+        self.target_label.setText(target_dir)
+
         # 选择目录控件
         source_btn = QPushButton('选择监听文件夹', self)
         source_btn.clicked.connect(self.open_source_folder)
@@ -56,9 +63,12 @@ class Example(QWidget):
         quit_btn.move(520, 300)
 
         self.setGeometry(300, 300, 800, 400)
-        self.setWindowTitle('Icon')
+        self.setWindowTitle(f'串修边程序_{version}')
         self.setWindowIcon(QIcon('./icon.png'))
         self.show()
+        # 是否自动启动
+        if my_utils.get_config('auto_start') is True:
+            self.listener()
 
     def open_source_folder(self):
         path = QFileDialog.getExistingDirectory(self, "选取监听文件夹", "/")  # 起始路径
@@ -70,7 +80,7 @@ class Example(QWidget):
 
     def listener(self):
         if self.btn.text() == '监听':
-            print('v2.0.2 文件监听中。。。')
+            print(f'{version} 文件监听中。。。')
             self.btn.setText('暂停')
             self.observer = Observer()
             self.thread = ListenerThread(self.observer, self.source_label.text(), self.target_label.text())

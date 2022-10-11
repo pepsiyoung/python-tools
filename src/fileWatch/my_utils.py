@@ -18,6 +18,13 @@ def coord():
     return tuple(list(map(int, res.split(","))))
 
 
+def get_config(key):
+    with open('config_border.yaml', 'r', encoding="utf-8") as f:
+        file_data = f.read()
+        data = yaml.load(file_data, Loader=yaml.FullLoader)
+        return data[key]
+
+
 def cut(img_path, point):
     origin_im = Image.open(Path(img_path))
     x1, y1, x2, y2 = point

@@ -14,3 +14,6 @@ border:
   - name: 14
     px: 20,30,15,25
 activate: 9
+source_dir: E:\temp\source1
+target_dir: E:\temp\target1
+auto_start: true
