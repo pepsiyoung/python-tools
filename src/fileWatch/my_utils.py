@@ -8,14 +8,19 @@ from PIL import Image
 from PIL import UnidentifiedImageError
 
 
-def coord():
+def coord(match=None):
     with open('config_border.yaml', 'r', encoding="utf-8") as f:
         file_data = f.read()
         data = yaml.load(file_data, Loader=yaml.FullLoader)
 
     config_list, activate = data['border'], data['activate']
-    res = list(filter(lambda x: (x['name'] == activate), config_list))[0]['px']
-    return tuple(list(map(int, res.split(","))))
+    cur_dict = list(filter(lambda x: (x['name'] == activate), config_list))[0]
+    result = cur_dict['px']
+    if match is not None:
+        for key in cur_dict.keys():
+            if len(key.split('-')) > 1 and match.lower().find(key[0]) >= 0:
+                result = cur_dict[key]
+    return tuple(list(map(int, result.split(","))))
 
 
 def get_config(key):

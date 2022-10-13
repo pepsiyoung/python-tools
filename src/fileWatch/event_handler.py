@@ -23,7 +23,7 @@ class FileEventHandler(FileSystemEventHandler):
             suffix = Path(event.src_path).suffix
             file_name = Path(event.src_path).stem
             if suffix.endswith("jpg"):
-                cut_im = cut(event.src_path, coord())
+                cut_im = cut(event.src_path, coord(file_name))
                 cur_date = time.strftime("%Y-%m-%d", time.localtime())
                 save_path = Path(self.target_path).joinpath(cur_date)
                 Path(save_path).mkdir(parents=True, exist_ok=True)

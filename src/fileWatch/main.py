@@ -6,7 +6,7 @@ from watchdog.observers import Observer
 from event_handler import FileEventHandler
 import my_utils
 
-version = 'v2.1.0'
+version = 'v2.2.1'
 
 
 class Example(QWidget):
@@ -19,6 +19,7 @@ class Example(QWidget):
         self.btn = QPushButton('监听', self)
         self.source_label = QLabel(self)
         self.target_label = QLabel(self)
+        self.activate_label = QLabel(self)
         self.valid()
         self.init_ui()
 
@@ -38,11 +39,13 @@ class Example(QWidget):
         self.target_label.setText('请选择目标文件夹')
         self.target_label.move(100, 150)
         self.target_label.setFixedWidth(400)
+        self.activate_label.move(100, 220)
 
         source_dir = my_utils.get_config('source_dir')
         target_dir = my_utils.get_config('target_dir')
         self.source_label.setText(source_dir)
         self.target_label.setText(target_dir)
+        self.activate_label.setText(f'ACTIVATE: {my_utils.get_config("activate")}')
 
         # 选择目录控件
         source_btn = QPushButton('选择监听文件夹', self)

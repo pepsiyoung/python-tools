@@ -1,19 +1,41 @@
 border:
-  - name: 8
-    px: 42,30,36,51
-  - name: 9
-    px: 0,28,0,35
-  - name: 10
-    px: 5,25,15,50
-  - name: 11
-    px: 0,28,0,18
-  - name: 12
-    px: 15,25,15,20
-  - name: 13
-    px: 8,8,6,10
-  - name: 14
-    px: 20,30,15,25
-activate: 9
+#  - name: 8
+#    px: 42,30,36,51
+#  - name: 9
+#    px: 0,28,0,35
+#  - name: 10
+#    px: 5,25,15,50
+#  - name: 11
+#    px: 0,28,0,18
+#  - name: 12
+#    px: 15,25,15,20
+#  - name: 13
+#    px: 8,8,6,10
+#  - name: 14
+#    px: 20,30,15,25
+  - name: M02-11
+    px: 98,20,95,25
+  - name: M02-12
+    px: 145,50,115,28
+  - name: M02-16
+    px: 42,30,16,42
+  - name: M02-21
+    px: 15,10,10,15
+    a-px: 60,10,10,15
+    b-px: 15,10,30,15
+  - name: M02-22
+    px: 35,5,62,24
+    a-px: 38,5,62,35
+    b-px: 35,5,65,24
+  - name: M02-23
+    px: 48,14,15,0
+    a-px: 55,14,15,0
+    b-px: 48,22,16,0
+  - name: M02-24
+    px: 35,5,62,24
+    a-px: 215,16,20,15
+    b-px: 215,5,15,18
+activate: M02-24
 source_dir: E:\temp\source1
 target_dir: E:\temp\target1
 auto_start: true
