@@ -36,6 +36,7 @@ border:
     a-px: 215,16,20,15
     b-px: 215,5,15,18
 activate: M02-24
+rename_dir: E:\temp\source2
 source_dir: E:\temp\source1
 target_dir: E:\temp\target1
 auto_start: true

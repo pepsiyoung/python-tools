@@ -4,9 +4,11 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QLabel, QMessageBox
 from watchdog.observers import Observer
 from event_handler import FileEventHandler
+from event_rename_handler import EventRenameHandler
 import my_utils
+import global_var
 
-version = 'v3.0.0'
+version = 'v3.1.0'
 
 
 class Example(QWidget):
@@ -16,10 +18,13 @@ class Example(QWidget):
 
         self.thread = None
         self.observer = None
+        self.thread2 = None
+        self.observer2 = None
         self.btn = QPushButton('监听', self)
         self.source_label = QLabel(self)
         self.target_label = QLabel(self)
         self.activate_label = QLabel(self)
+        self.rename_label = QLabel(self)
         self.valid()
         self.init_ui()
 
@@ -40,11 +45,13 @@ class Example(QWidget):
         self.target_label.move(100, 150)
         self.target_label.setFixedWidth(400)
         self.activate_label.move(100, 220)
+        self.rename_label.move(100, 250)
 
         source_dir = my_utils.get_config('source_dir')
         target_dir = my_utils.get_config('target_dir')
         self.source_label.setText(source_dir)
         self.target_label.setText(target_dir)
+        self.rename_label.setText(f'rename_dir: {my_utils.get_config("rename_dir")}')
         self.activate_label.setText(f'ACTIVATE: {my_utils.get_config("activate")}')
 
         # 选择目录控件
@@ -83,15 +90,21 @@ class Example(QWidget):
 
     def listener(self):
         if self.btn.text() == '监听':
+            global_var.init()
             print(f'{version} 文件监听中。。。')
             self.btn.setText('暂停')
             self.observer = Observer()
             self.thread = ListenerThread(self.observer, self.source_label.text(), self.target_label.text())
             self.thread.start()
+
+            self.observer2 = Observer()
+            self.thread2 = ListenerThreadRename(self.observer2, my_utils.get_config("rename_dir"))
+            self.thread2.start()
         else:
             print('监听结束')
             self.btn.setText('监听')
             self.observer.stop()
+            self.observer2.stop()
 
 
 class ListenerThread(QThread):
@@ -103,8 +116,19 @@ class ListenerThread(QThread):
         self.target = target
 
     def run(self):
-        event_handler = FileEventHandler(self.target)
-        self.observer.schedule(event_handler, self.source, True)
+        self.observer.schedule(FileEventHandler(self.target), self.source, True)
+        self.observer.start()
+        self.observer.join()
+
+
+class ListenerThreadRename(QThread):
+    def __init__(self, observer, source):
+        super(ListenerThreadRename, self).__init__()
+        self.observer = observer
+        self.source = source
+
+    def run(self):
+        self.observer.schedule(EventRenameHandler(), self.source, True)
         self.observer.start()
         self.observer.join()
 
