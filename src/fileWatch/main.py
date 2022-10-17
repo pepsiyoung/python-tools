@@ -6,7 +6,7 @@ from watchdog.observers import Observer
 from event_handler import FileEventHandler
 import my_utils
 
-version = 'v2.2.1'
+version = 'v3.0.0'
 
 
 class Example(QWidget):
@@ -28,7 +28,7 @@ class Example(QWidget):
         license_key = my_utils.get_file_licence()
         valid = my_utils.valid_licence(license_key)
         if not valid:
-            QMessageBox.warning(self, "警告", "Licence无效", QMessageBox.Yes)
+            QMessageBox.warning(self, "警告", "Licence无效3.0", QMessageBox.Yes)
             sys.exit(0)
 
     def init_ui(self):

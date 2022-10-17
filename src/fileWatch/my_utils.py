@@ -69,7 +69,7 @@ def get_file_licence():
 
 def get_sys_licence():
     address = hex(uuid.getnode())[2:]
-    return encrypt_md5(address + '_cscsi')
+    return encrypt_md5(address + '_cscsiv3')
 
 
 def valid_licence(licence):
