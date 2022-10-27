@@ -8,7 +8,7 @@ from event_rename_handler import EventRenameHandler
 import my_utils
 import global_var
 
-version = 'v3.1.0'
+version = 'v3.1.1'
 
 
 class Example(QWidget):
@@ -89,6 +89,7 @@ class Example(QWidget):
         self.target_label.setText(path)
 
     def listener(self):
+        rename_dir = my_utils.get_config("rename_dir")
         if self.btn.text() == '监听':
             global_var.init()
             print(f'{version} 文件监听中。。。')
@@ -97,14 +98,17 @@ class Example(QWidget):
             self.thread = ListenerThread(self.observer, self.source_label.text(), self.target_label.text())
             self.thread.start()
 
-            self.observer2 = Observer()
-            self.thread2 = ListenerThreadRename(self.observer2, my_utils.get_config("rename_dir"))
-            self.thread2.start()
+            if rename_dir is not None:
+                # 监听外观文件夹修改文件名
+                self.observer2 = Observer()
+                self.thread2 = ListenerThreadRename(self.observer2, rename_dir)
+                self.thread2.start()
         else:
             print('监听结束')
             self.btn.setText('监听')
             self.observer.stop()
-            self.observer2.stop()
+            if rename_dir is not None:
+                self.observer2.stop()
 
 
 class ListenerThread(QThread):

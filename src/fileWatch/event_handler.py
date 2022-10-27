@@ -1,5 +1,6 @@
 import time
 import global_var
+import my_utils
 from pathlib import Path
 from watchdog.events import FileSystemEventHandler
 from my_utils import valid_image, cut, coord
@@ -31,11 +32,12 @@ class FileEventHandler(FileSystemEventHandler):
                 im_save_path = Path(save_path).joinpath('{}{}'.format(file_name, suffix))
                 cut_im.save(im_save_path)
                 # 外观图修改名称
-                print('等待：外观图修改名称')
-                queue = global_var.get_queue()
-                wg_im_path = Path(queue.get())
-                wg_im_path.rename(wg_im_path.parent.joinpath('{}{}'.format(file_name, suffix)))
-                print('完成：外观图修改名称')
+                if my_utils.get_config("rename_dir") is not None:
+                    print('等待：外观图修改名称')
+                    queue = global_var.get_queue()
+                    wg_im_path = Path(queue.get())
+                    wg_im_path.rename(wg_im_path.parent.joinpath('{}{}'.format(file_name, suffix)))
+                    print('完成：外观图修改名称')
 
         except Exception as err:
             print(err, event.src_path)
