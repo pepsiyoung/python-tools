@@ -39,7 +39,7 @@ border:
 #    px: 35,5,62,24
 #    a-px: 215,16,20,15
 #    b-px: 215,5,15,18
-activate: 16
+activate: 15
 rename_dir:
 source_dir: E:\detectImage\xxx\source
 target_dir: E:\detectImage\xxx\target
