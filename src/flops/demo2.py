@@ -9,12 +9,11 @@ pd.options.display.precision = 3
 
 def var_dict(*args):
     callers_local_vars = inspect.currentframe().f_back.f_locals.items()
-    print(callers_local_vars)
     return dict([(name, val) for name, val in callers_local_vars if val is arg][0]
                 for arg in args)
 
 
-def wall_time(stem, arg_dict, duration=3):
+def wall_time(stem, arg_dict, duration=10):
     return benchmark.Timer(stem, globals=arg_dict).blocked_autorange(min_run_time=duration).median
 
 
@@ -32,3 +31,5 @@ print(res)
 
 # callers_local_vars = inspect.currentframe().f_back.f_locals.items()
 # print(callers_local_vars)
+
+
