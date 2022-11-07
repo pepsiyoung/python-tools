@@ -10,7 +10,6 @@ ROOT = FILE.parents[0]
 name2id = {'SP': 0, 'SC': 1, 'XC': 2, 'PP': 3, 'jLW': 4, 'XH': 5, 'HBN': 6, 'DS': 7, 'HB': 8, 'HS': 9, 'SN': 10}
 
 
-
 def convert(img_size, box):
     dw = 1. / (img_size[0])
     dh = 1. / (img_size[1])
@@ -23,6 +22,12 @@ def convert(img_size, box):
     y = y * dh
     h = h * dh
     return x, y, w, h
+
+
+def convert_polygon(im_w, im_h, x, y):
+    dw = 1. / im_w
+    dh = 1. / im_h
+    return x * dw, y * dh
 
 
 def decode_json(opt, json_name):
@@ -47,6 +52,13 @@ def decode_json(opt, json_name):
             bb = (x1, y1, x2, y2)
             bbox = convert((img_w, img_h), bb)
             txt_file.write(str(name2id[label_name]) + " " + " ".join([str(a) for a in bbox]) + '\n')
+        elif i['shape_type'] == 'polygon':
+            result_xy = []
+            for x, y in i['points']:
+                normal_x, normal_y = convert_polygon(img_w, img_h, x, y)
+                result_xy.append(normal_x)
+                result_xy.append(normal_y)
+            txt_file.write(f'{str(name2id[label_name])} {" ".join([str(a) for a in result_xy])}\n')
     txt_file.close()
 
 
@@ -59,8 +71,8 @@ def parse_opt(known=False):
 
 
 if __name__ == "__main__":
-    opt = parse_opt(True)
-    json_names = [x for x in Path(opt.source_folder).iterdir() if PurePath(x).match("*.json")]
+    cur_opt = parse_opt(True)
+    json_names = [x for x in Path(cur_opt.source_folder).iterdir() if PurePath(x).match("*.json")]
 
-    for json_name in tqdm(json_names):
-        decode_json(opt, json_name.name)
+    for cur_name in tqdm(json_names):
+        decode_json(cur_opt, cur_name.name)
