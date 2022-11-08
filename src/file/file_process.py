@@ -30,11 +30,11 @@ def parse_opt(known=False):
 
 config_map = {
     8: {'middle_px': 1788, 'left_box': (48, 14, 0, 30), 'right_box': (0, 14, 30, 25)},
-    9: {'middle_px': 1760, 'left_box': (55, 25, 0, 25), 'right_box': (0, 25, 35, 12)},
+    9: {'middle_px': 1740, 'left_box': (20, 0, 0, 0), 'right_box': (0, 0, 35, 0)},
     10: {'middle_px': 1864, 'left_box': (10, 25, 12, 30), 'right_box': (0, 34, 75, 40)},
-    11: {'middle_px': 1832, 'left_box': (65, 30, 0, 35), 'right_box': (10, 30, 30, 25)},
-    12: {'middle_px': 1876, 'left_box': (95, 20, 5, 20), 'right_box': (0, 15, 20, 20)},
-    13: {'middle_px': 1852, 'left_box': (90, 5, 0, 0), 'right_box': (0, 5, 48, 0)},
+    11: {'middle_px': 1800, 'left_box': (30, 0, 0, 0), 'right_box': (0, 0, 15, 0)},
+    12: {'middle_px': 1785, 'left_box': (0, 0, 0, 0), 'right_box': (0, 0, 0, 0)},
+    13: {'middle_px': 1790, 'left_box': (20, 0, 0, 0), 'right_box': (0, 0, 20, 0)},
     14: {'middle_px': 1740, 'left_box': (40, 25, 0, 30), 'right_box': (0, 30, 0, 45)}
 }
 
