@@ -21,7 +21,7 @@ class ImageProcess:
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--machine-no', type=int, required=True, help='机台号')
+    parser.add_argument('--machine-no', type=str, required=True, help='机台号')
     parser.add_argument('--source', type=str, default='./source', help='存放需要裁剪图片的文件夹路径')
     parser.add_argument('--target', default='./target', help='save results to project/name')
     parser.add_argument('--resize', nargs='+', type=int, default=[1728, 608], help='cut size w,h')
@@ -29,13 +29,25 @@ def parse_opt(known=False):
 
 
 config_map = {
-    8: {'middle_px': 1788, 'left_box': (48, 14, 0, 30), 'right_box': (0, 14, 30, 25)},
-    9: {'middle_px': 1740, 'left_box': (20, 0, 0, 0), 'right_box': (0, 0, 35, 0)},
-    10: {'middle_px': 1864, 'left_box': (10, 25, 12, 30), 'right_box': (0, 34, 75, 40)},
-    11: {'middle_px': 1800, 'left_box': (30, 0, 0, 0), 'right_box': (0, 0, 15, 0)},
-    12: {'middle_px': 1785, 'left_box': (0, 0, 0, 0), 'right_box': (0, 0, 0, 0)},
-    13: {'middle_px': 1790, 'left_box': (20, 0, 0, 0), 'right_box': (0, 0, 20, 0)},
-    14: {'middle_px': 1740, 'left_box': (40, 25, 0, 30), 'right_box': (0, 30, 0, 45)}
+    '08-A': {'middle_px': 1788, 'left_box': (48, 14, 0, 30), 'right_box': (0, 14, 30, 25)},
+    '08-B': {'middle_px': 1788, 'left_box': (48, 25, 0, 30), 'right_box': (0, 25, 30, 25)},
+    '09-A': {'middle_px': 1760, 'left_box': (55, 25, 0, 25), 'right_box': (0, 25, 35, 12)},
+    '10-A': {'middle_px': 1864, 'left_box': (10, 25, 12, 30), 'right_box': (0, 34, 75, 40)},
+    '10-B': {'middle_px': 1864, 'left_box': (80, 40, 0, 5), 'right_box': (0, 34, 28, 5)},
+    '11-A': {'middle_px': 1835, 'left_box': (60, 30, 0, 30), 'right_box': (0, 25, 15, 25)},
+    '12-3668': {'middle_px': 1878, 'left_box': (90, 20, 5, 20), 'right_box': (0, 10, 12, 25)},
+    '12-3728': {'middle_px': 1885, 'left_box': (110, 0, 0, 40), 'right_box': (0, 0, 70, 40)},
+    '13-A': {'middle_px': 1850, 'left_box': (80, 5, 0, 0), 'right_box': (0, 0, 40, 0)},
+    '14-A': {'middle_px': 1740, 'left_box': (10, 10, 0, 35), 'right_box': (0, 10, 0, 40)},
+    '14-B': {'middle_px': 1740, 'left_box': (10, 25, 0, 0), 'right_box': (0, 30, 0, 5)},
+    'cut-09': {'middle_px': 1740, 'left_box': (20, 0, 0, 0), 'right_box': (0, 0, 35, 0)},
+    'cut-11': {'middle_px': 1800, 'left_box': (30, 0, 0, 0), 'right_box': (0, 0, 15, 0)},
+    'cut-12': {'middle_px': 1785, 'left_box': (0, 0, 0, 0), 'right_box': (0, 0, 0, 0)},
+    'cut-13': {'middle_px': 1790, 'left_box': (20, 0, 0, 0), 'right_box': (0, 0, 20, 0)},
+    'cut-14': {'middle_px': 1740, 'left_box': (40, 25, 0, 30), 'right_box': (0, 30, 0, 45)},
+    'other-3180-610': {'middle_px': 1590, 'left_box': (0, 10, 0, 85), 'right_box': (0, 10, 0, 85)},
+    'other-3180-620': {'middle_px': 1590, 'left_box': (0, 0, 0, 110), 'right_box': (0, 0, 0, 110)},
+    'other-3180-670': {'middle_px': 1590, 'left_box': (0, 0, 0, 70), 'right_box': (0, 0, 0, 70)}
 }
 
 if __name__ == "__main__":
