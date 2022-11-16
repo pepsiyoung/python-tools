@@ -24,6 +24,7 @@ def parse_opt(known=False):
     parser.add_argument('--machine-no', type=str, required=True, help='机台号')
     parser.add_argument('--source', type=str, default='./source', help='存放需要裁剪图片的文件夹路径')
     parser.add_argument('--target', default='./target', help='save results to project/name')
+    parser.add_argument('--disable-resize', action='store_true', default=False, help='禁用resize')
     parser.add_argument('--resize', nargs='+', type=int, default=[1728, 608], help='cut size w,h')
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
@@ -47,7 +48,10 @@ config_map = {
     'cut-14': {'middle_px': 1740, 'left_box': (40, 25, 0, 30), 'right_box': (0, 30, 0, 45)},
     'other-3180-610': {'middle_px': 1590, 'left_box': (0, 10, 0, 85), 'right_box': (0, 10, 0, 85)},
     'other-3180-620': {'middle_px': 1590, 'left_box': (0, 0, 0, 110), 'right_box': (0, 0, 0, 110)},
-    'other-3180-670': {'middle_px': 1590, 'left_box': (0, 0, 0, 70), 'right_box': (0, 0, 0, 70)}
+    'other-3180-670': {'middle_px': 1590, 'left_box': (0, 0, 0, 70), 'right_box': (0, 0, 0, 70)},
+    'wg7242': {'middle_px': 4425, 'left_box': (50, 120, 0, 45), 'right_box': (0, 85, 75, 45)},
+    'wg7415': {'middle_px': 4475, 'left_box': (40, 10, 0, 40), 'right_box': (0, 20, 70, 45)},
+    'wg7424': {'middle_px': 4485, 'left_box': (65, 75, 0, 70), 'right_box': (0, 65, 95, 60)},
 }
 
 if __name__ == "__main__":
@@ -66,22 +70,10 @@ if __name__ == "__main__":
         for index, item in enumerate(im_list):
             item_im, item_box = item
             cut_im = ImageProcess.cut_around(item_im, item_box)
-            resize_im = cut_im.resize(resize, Image.Resampling.LANCZOS)
-            save_path = Path(opt.target).joinpath('{}_{}.jpg'.format(im_path.stem, index))
+            # 是否禁用resize
+            if opt.disable_resize:
+                resize_im = cut_im
+            else:
+                resize_im = cut_im.resize(resize, Image.Resampling.LANCZOS)
+            save_path = Path(opt.target).joinpath('{}_{}.jpg'.format(index, im_path.stem))
             resize_im.convert('RGB').save(save_path)
-
-# 测试用
-# im_path = r"E:\DataProcess\8.7裂片原图_14_3460\14-004838-B.jpg"
-# middle = 1740
-# left_box = (40, 25, 0, 30)
-# right_box = (0, 30, 0, 45)
-#
-# l_im, r_im = ImageProcess.cut_middle(im_path, middle)
-# # l_im.show()
-# # r_im.show()
-# left_around_im = ImageProcess.cut_around(l_im, left_box)
-# right_around_im = ImageProcess.cut_around(r_im, right_box)
-# left_around_im.show()
-# right_around_im.show()
-# print(left_around_im.size)
-# print(right_around_im.size)
