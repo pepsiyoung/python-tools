@@ -41,6 +41,7 @@ config_map = {
     '13-A': {'middle_px': 1850, 'left_box': (80, 5, 0, 0), 'right_box': (0, 0, 40, 0)},
     '14-A': {'middle_px': 1740, 'left_box': (10, 10, 0, 35), 'right_box': (0, 10, 0, 40)},
     '14-B': {'middle_px': 1740, 'left_box': (10, 25, 0, 0), 'right_box': (0, 30, 0, 5)},
+    '14-one': {'middle_px': 1690, 'left_box': (0, 0, 0, 85), 'right_box': (0, 0, 50, 100)},
     'cut-09': {'middle_px': 1740, 'left_box': (20, 0, 0, 0), 'right_box': (0, 0, 35, 0)},
     'cut-11': {'middle_px': 1800, 'left_box': (30, 0, 0, 0), 'right_box': (0, 0, 15, 0)},
     'cut-12': {'middle_px': 1785, 'left_box': (0, 0, 0, 0), 'right_box': (0, 0, 0, 0)},
@@ -52,6 +53,7 @@ config_map = {
     'wg7242': {'middle_px': 4425, 'left_box': (50, 120, 0, 45), 'right_box': (0, 85, 75, 45)},
     'wg7415': {'middle_px': 4475, 'left_box': (40, 10, 0, 40), 'right_box': (0, 20, 70, 45)},
     'wg7424': {'middle_px': 4485, 'left_box': (65, 75, 0, 70), 'right_box': (0, 65, 95, 60)},
+    'test': {'middle_px': 2068, 'left_box': (65, 75, 0, 70), 'right_box': (0, 65, 95, 60)},
 }
 
 if __name__ == "__main__":
