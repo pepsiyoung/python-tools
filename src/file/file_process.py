@@ -53,7 +53,7 @@ config_map = {
     'wg7242': {'middle_px': 4425, 'left_box': (50, 120, 0, 45), 'right_box': (0, 85, 75, 45)},
     'wg7415': {'middle_px': 4475, 'left_box': (40, 10, 0, 40), 'right_box': (0, 20, 70, 45)},
     'wg7424': {'middle_px': 4485, 'left_box': (65, 75, 0, 70), 'right_box': (0, 65, 95, 60)},
-    'test': {'middle_px': 2068, 'left_box': (65, 75, 0, 70), 'right_box': (0, 65, 95, 60)},
+    'test': {'middle_px': 4132, 'left_box': (70, 75, 0, 70), 'right_box': (0, 65, 95, 60)},
 }
 
 if __name__ == "__main__":
