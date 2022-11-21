@@ -9,7 +9,9 @@ ROOT = FILE.parents[0]
 # name2id = {'shaohandai': 0, 'yiwu': 1, 'zhengpian': 2, 'quejiao': 3, 'bingpian': 4}
 # name2id = {'SP': 0, 'SC': 1, 'XC': 2, 'PP': 3, 'jLW': 4, 'XH': 5, 'HBN': 6, 'DS': 7, 'HB': 8, 'HS': 9, 'SN': 10}
 # name2id = {'txy': 0, 'PP': 1}
-name2id = {'xuhan': 0, 'fanxu': 1, 'liewen': 2, 'duanlu': 3, 'duanshan': 4, 'yiwu': 5, 'quejiao': 6}
+# name2id = {'xuhan': 0, 'fanxu': 1, 'liewen': 2, 'duanlu': 3, 'duanshan': 4, 'yiwu': 5, 'quejiao': 6}
+name2id = {'binpian': 0, 'bingpian': 0, 'quejiao': 1, 'shaohandai': 2, 'yiwu': 3, '异物': 3, 'zhengpian': 4, 'dajie': 5,
+           'shouweipian': 6, 'quepian': 7, "que'jiao": 7}
 
 
 def convert(img_size, box):

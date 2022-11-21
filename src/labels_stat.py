@@ -7,7 +7,9 @@ from tqdm import tqdm
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', type=str, required=True, help='labels存放的位置')
-    parser.add_argument('--labels', type=str, nargs='+', default=['xuhan1', 'xuhan2', 'liewen', 'duanlu'])
+    parser.add_argument('--labels', type=str, nargs='+',
+                        default=['xuhan', 'fanxu', 'liewen', 'duanlu', 'duanshan', 'yiwu', 'quejiao', 'XXX', 'YYY',
+                                 'ZZZ'])
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
