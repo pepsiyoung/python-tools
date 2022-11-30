@@ -5,15 +5,15 @@ from tqdm import tqdm
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type=str, default=r'E:\DataProcess\4_sample_0812\labels', help='源文件夹')
-    parser.add_argument('--target', default=r'E:\DataProcess\4_sample_0812\4_labels', help='目标文件夹')
+    parser.add_argument('--source', type=str, default=r'D:\Datasets\批量打标计划_28G\有效样本\_WG\1128WG\CCC\labels', help='源文件夹')
+    parser.add_argument('--target', default=r'D:\Datasets\批量打标计划_28G\有效样本\_WG\1128WG\CCC\labels2', help='目标文件夹')
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
 if __name__ == '__main__':
     opt = parse_opt(True)
     # {old:new}
-    replace_map = {1: 2, 2: 3}
+    replace_map = {4: 0}
     Path(opt.target).mkdir(parents=True, exist_ok=True)
 
     txt_paths = list(Path(opt.source).glob('*.txt'))
