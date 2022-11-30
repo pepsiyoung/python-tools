@@ -41,6 +41,6 @@ border:
 #    b-px: 215,5,15,18
 activate: 15
 rename_dir:
-source_dir: E:\detectImage\xxx\source
-target_dir: E:\detectImage\xxx\target
+source_dir: D:\Test\source1
+target_dir: D:\Test\source2
 auto_start: false
