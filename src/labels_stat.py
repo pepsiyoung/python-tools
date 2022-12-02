@@ -10,7 +10,7 @@ def parse_opt(known=False):
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', type=str, required=True, help='labels存放的位置')
-    parser.add_argument('--labels', type=str, nargs='+', default=category_wg)
+    parser.add_argument('--labels', type=str, nargs='+', default=category_el)
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
@@ -31,8 +31,8 @@ if __name__ == "__main__":
                 value = line[0]
                 values_cnt[value] = values_cnt.get(value, 0) + 1
 
-    data = values_cnt.values()
-    print(data)
+    print(values_cnt.keys())
+    print(values_cnt.values())
 
     # # 显示数据标签
     # for x, y in zip(range(len(data)), data):
