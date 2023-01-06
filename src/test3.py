@@ -1,8 +1,8 @@
 import time
 
-im_path = r"F:\temp\8-1.jpg"
+im_path = r"C:\Users\admin\Desktop\待检测图\43-000235-A.jpg"
 
-write_file = open(r"F:\temp\source1\name.jpg", "wb")
+write_file = open(r"D:\Test\source1\name.jpg", "wb")
 with open(im_path, "rb") as f:
     for index, line in enumerate(f.readlines()):
         write_file.write(line)
