@@ -5,8 +5,9 @@ from tqdm import tqdm
 
 
 def parse_opt(known=False):
-    category_wg = ['并片', '缺角', '少焊带', '异物', '正偏', '搭接', '首尾片', '缺片', 'XXX', 'YYY', 'ZZZ']
-    category_el = ['虚焊', '反虚', '裂纹', '短路', '断栅', '异物', '缺角', '缺片', 'XXX', 'YYY', 'ZZZ']
+    # category_wg = ['并片', '缺角', '少焊带', '异物', '正偏', '搭接', '首尾片', '缺片', 'XXX', 'YYY', 'ZZZ']
+    # category_el = ['虚焊', '反虚', '裂纹', '短路', '断栅', '异物', '缺角', '缺片', 'XXX', 'YYY', 'ZZZ']
+    category_el = ['虚焊', '反虚', '裂纹', '短路', '缺角', '断栅', '异物', 'XXX', 'YYY', 'ZZZ']
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', type=str, required=True, help='labels存放的位置')
