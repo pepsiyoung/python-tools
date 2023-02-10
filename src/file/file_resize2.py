@@ -20,6 +20,6 @@ if __name__ == "__main__":
         im = Image.open(im_path)
         w, h = im.size
         ratio = 1728 / w
-        resize_im = im.resize((int(w * ratio), int(h * ratio)), Image.ANTIALIAS)
+        resize_im = im.resize((int(w * ratio), int(h * ratio)), Image.Resampling.LANCZOS)
         save_path = Path(opt.target).joinpath(im_path.name)
         resize_im.convert('RGB').save(save_path)
