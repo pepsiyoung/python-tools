@@ -15,16 +15,22 @@ def parse_opt(known=False):
 if __name__ == '__main__':
     opt = parse_opt(True)
     txt_paths = list(Path(opt.source).glob('*.txt'))
+    wait_process = list()
     for txt_path in tqdm(list(txt_paths)):
         move_flag = False
         with open(txt_path, 'r') as f:
             lines = f.readlines()
             x = [line[0] for line in lines]
             if '4' in x or '6' in x:
+                wait_process.append(txt_path)
                 move_flag = True
+
                 # shutil.copy(Path(txt_path), Path(opt.target))
         if move_flag:
             shutil.move(Path(txt_path), Path(opt.target))
+
+    for txt_path in wait_process:
+        shutil.copy(Path(txt_path), Path(opt.target))
 
         # with open(txt_path, 'r') as f:
         #     lines = (i for i in f.readlines() if int(i[0]) < 4)
