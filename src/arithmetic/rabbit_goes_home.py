@@ -1,4 +1,12 @@
 def questionA(m, n, snake):
+    """
+    时间复杂度 O(N^2)
+    空间复杂度 O(N^2)
+    :param m: 列数
+    :param n: 行数
+    :param snake: 蛇所在的 grid
+    :return: 路径数
+    """
     # dp 初始化 全部填充 0
     dp = [[0 for _ in range(n)] for _ in range(m)]
     dp[0][0] = 0 if [0, 0] in snake else 1
@@ -19,6 +27,14 @@ def questionA(m, n, snake):
 
 
 def questionB(m, n, snake):
+    """
+    时间复杂度 O(N^2)
+    空间复杂度 O(N)
+    :param m: 列数
+    :param n: 行数
+    :param snake: 蛇所在的 grid
+    :return: 路径数
+    """
     dp = [0] * n
     dp[0] = 0 if [0, 0] in snake else 1
 
@@ -34,25 +50,51 @@ def questionB(m, n, snake):
 
 
 def questionD(m, n, snake):
-    pass
+    """
+    时间复杂度 O(N^2)
+    空间复杂度 O(N^2)
+    :param m: 列数
+    :param n: 行数
+    :param snake: 蛇所在的 grid
+    :return: 所有经过路径坐标
+    """
+    dp = [[list() for _ in range(n)] for _ in range(m)]
+    if [0, 0] not in snake:
+        dp[0][0].append([(0, 0)])
 
+    for i in range(1, m):
+        if [i, 0] not in snake and dp[i - 1][0] != []:
+            dp[i][0] = [[(_, 0) for _ in range(i + 1)]]
+
+    for i in range(1, n):
+        if [0, i] not in snake and dp[0][i - 1] != []:
+            dp[0][i] = [[(0, _) for _ in range(i + 1)]]
+
+    for i in range(1, m):
+        for j in range(1, n):
+            if [i, j] not in snake:
+                temp = list()
+                temp.extend(dp[i - 1][j])
+                temp.extend(dp[i][j - 1])
+                dp[i][j] = [_ + [(i, j)] for _ in temp]
+
+    return dp[m - 1][n - 1]
 
 
 if __name__ == '__main__':
-    # test_cases = [
-    #     (3, 3, [[1, 1]]),
-    #     (2, 2, [[0, 1]]),
-    #     (3, 3, [0, 1]),
-    #     (3, 3, [1, 0]),
-    #     (3, 3, [0, 0]),
-    #     (3, 3, [2, 2])
-    # ]
-    # for params in test_cases:
-    #     print(f'params -> m:{params[0]} m:{params[1]} snake_data:{params[2]}')
-    #     m, n, snake_date = params[0], params[1], params[2]
-    #     res = questionA(m, n, snake_date)
-    #     # res = questionB(m, n, snake_date)
-    #     print(f'result:{res}')
-    #     print('==============================')
-    res = questionA(2, 6, [[0, 1], [0, 5], [1, 3]])
-    print(res)
+    # 测试用例
+    test_cases = [
+        (3, 3, [[1, 1]]),
+        (3, 3, [[0, 1]]),
+        (3, 3, [[1, 0]]),
+        (3, 3, [[0, 0]]),
+        (3, 3, [[2, 2]]),
+        (2, 2, [[0, 1]])
+    ]
+    for params in test_cases:
+        m, n, snake_date = params
+        print(f'params -> m:{m} n:{n} snake_data:{snake_date}')
+        print(f'func -> questionA result:{questionA(m, n, snake_date)}')
+        print(f'func -> questionB result:{questionB(m, n, snake_date)}')
+        print(f'func -> questionD result:{questionD(m, n, snake_date)}')
+        print('==============================')

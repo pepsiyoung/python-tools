@@ -58,7 +58,9 @@ def questionD(m, n, snake):
 
 
 if __name__ == '__main__':
-    snake_data = [[1, 1]]
-    res = questionD(3, 3, snake_data)
-    print(res)
-    # print(len(res))
+    # nums = [40, 36, 40, 2, 36, 100, 7]
+    # for i in range(2):
+    #     r = nums.remove(40)
+    #     print(nums, r)
+
+    print(len([]))
