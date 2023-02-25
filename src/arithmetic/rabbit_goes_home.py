@@ -33,12 +33,26 @@ def questionB(m, n, snake):
     return dp[n - 1]
 
 
+def questionD(m, n, snake):
+    pass
+
+
+
 if __name__ == '__main__':
-    test_cases = [(3, 3, [[1, 1]]), (2, 2, [[0, 1]])]
-    for params in test_cases:
-        print(f'params -> m:{params[0]} m:{params[1]} snake_data:{params[2]}')
-        m, n, snake_date = params[0], params[1], params[2]
-        res = questionA(m, n, snake_date)
-        # res = questionB(m, n, snake_date)
-        print(f'result:{res}')
-        print('==============================')
+    # test_cases = [
+    #     (3, 3, [[1, 1]]),
+    #     (2, 2, [[0, 1]]),
+    #     (3, 3, [0, 1]),
+    #     (3, 3, [1, 0]),
+    #     (3, 3, [0, 0]),
+    #     (3, 3, [2, 2])
+    # ]
+    # for params in test_cases:
+    #     print(f'params -> m:{params[0]} m:{params[1]} snake_data:{params[2]}')
+    #     m, n, snake_date = params[0], params[1], params[2]
+    #     res = questionA(m, n, snake_date)
+    #     # res = questionB(m, n, snake_date)
+    #     print(f'result:{res}')
+    #     print('==============================')
+    res = questionA(2, 6, [[0, 1], [0, 5], [1, 3]])
+    print(res)
