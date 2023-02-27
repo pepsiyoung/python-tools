@@ -5,8 +5,8 @@ from tqdm import tqdm
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type=str, default=r'D:\Datasets\批量打标计划_28G\有效样本\_WG\1128WG\CCC\labels', help='源文件夹')
-    parser.add_argument('--target', default=r'D:\Datasets\批量打标计划_28G\有效样本\_WG\1128WG\CCC\labels2', help='目标文件夹')
+    parser.add_argument('--source', type=str, default='./source', help='源文件夹')
+    parser.add_argument('--target', type=str, default='./target', help='目标文件夹')
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
