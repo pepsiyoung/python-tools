@@ -81,20 +81,52 @@ def questionD(m, n, snake):
     return dp[m - 1][n - 1]
 
 
+def questionE(m, n, snake):
+    def dfs(r, c, obstacle: set):
+        # terminator
+        if [r, c] in snake:
+            return 0
+        if c < 0 or c >= n or r < 0 or r >= m or (r, c) in obstacle:
+            return 0
+        if c == n - 1 and r == m - 1:
+            return 1
+
+        # process current
+        obstacle.add((r, c))
+
+        # drill down
+        res = 0
+        res += dfs(r + 1, c, obstacle)
+        res += dfs(r - 1, c, obstacle)
+        res += dfs(r, c + 1, obstacle)
+        res += dfs(r, c - 1, obstacle)
+
+        # reset status
+        obstacle.remove((r, c))
+        return res
+
+    return dfs(0, 0, set())
+
+
 if __name__ == '__main__':
     # 测试用例
-    test_cases = [
-        (3, 3, [[1, 1]]),
-        (3, 3, [[0, 1]]),
-        (3, 3, [[1, 0]]),
-        (3, 3, [[0, 0]]),
-        (3, 3, [[2, 2]]),
-        (2, 2, [[0, 1]])
-    ]
-    for params in test_cases:
-        m, n, snake_date = params
-        print(f'params -> m:{m} n:{n} snake_data:{snake_date}')
-        print(f'func -> questionA result:{questionA(m, n, snake_date)}')
-        print(f'func -> questionB result:{questionB(m, n, snake_date)}')
-        print(f'func -> questionD result:{questionD(m, n, snake_date)}')
-        print('==============================')
+    # test_cases = [
+    #     (3, 3, [[1, 1]]),
+    #     (3, 3, [[0, 1]]),
+    #     (3, 3, [[1, 0]]),
+    #     (3, 3, [[0, 0]]),
+    #     (3, 3, [[2, 2]]),
+    #     (2, 2, [[0, 1]])
+    # ]
+    # for params in test_cases:
+    #     m, n, snake_date = params
+    #     print(f'params -> m:{m} n:{n} snake_data:{snake_date}')
+    #     print(f'func -> questionA result:{questionA(m, n, snake_date)}')
+    #     print(f'func -> questionB result:{questionB(m, n, snake_date)}')
+    #     print(f'func -> questionD result:{questionD(m, n, snake_date)}')
+    #     print('==============================')
+
+    # test_cases = [[0, 1], [1, 3]]
+    test_cases = []
+    print(questionA(2, 3, test_cases))
+    print(questionE(2, 3, test_cases))
