@@ -58,3 +58,6 @@ if __name__ == '__main__':
 
     # Solution().subsets([1, 2, 3])
 
+    test = [(1, 2)]
+    test = test + [(3, 3)] + []
+    print(test)

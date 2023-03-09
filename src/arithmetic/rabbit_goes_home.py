@@ -82,30 +82,32 @@ def questionD(m, n, snake):
 
 
 def questionE(m, n, snake):
-    def dfs(r, c, obstacle: set):
+    def dfs(r, c, obstacle: set, cur: list):
         # terminator
         if [r, c] in snake:
-            return 0
+            return
         if c < 0 or c >= n or r < 0 or r >= m or (r, c) in obstacle:
-            return 0
+            return
         if c == n - 1 and r == m - 1:
-            return 1
+            # return [(r, c)]
+            print(cur + [(r, c)])
 
         # process current
         obstacle.add((r, c))
 
         # drill down
-        res = 0
-        res += dfs(r + 1, c, obstacle)
-        res += dfs(r - 1, c, obstacle)
-        res += dfs(r, c + 1, obstacle)
-        res += dfs(r, c - 1, obstacle)
+        cur.append((r, c))
+        dfs(r + 1, c, obstacle, cur)
+        dfs(r - 1, c, obstacle, cur)
+        dfs(r, c + 1, obstacle, cur)
+        dfs(r, c - 1, obstacle, cur)
 
         # reset status
         obstacle.remove((r, c))
-        return res
+        cur.clear()
+        cur.append((0, 0))
 
-    return dfs(0, 0, set())
+    dfs(0, 0, set(), [])
 
 
 if __name__ == '__main__':
@@ -127,6 +129,6 @@ if __name__ == '__main__':
     #     print('==============================')
 
     # test_cases = [[0, 1], [1, 3]]
-    test_cases = []
-    print(questionA(2, 3, test_cases))
-    print(questionE(2, 3, test_cases))
+    test_cases = [[0, 1], [1, 3]]
+    # print(questionA(2, 3, test_cases))
+    questionE(2, 5, test_cases)
