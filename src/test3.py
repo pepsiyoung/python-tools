@@ -1,3 +1,10 @@
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         def dfs(x, y, m, n, mem):
@@ -47,6 +54,23 @@ class Solution:
         #     res.extend(sub_list)
         # print(res)
 
+    def generateParenthesis(self, n: int):
+        result = []
+
+        def dfs(left, right, n, s):
+            # terminator
+            if left == n and right == n:
+                result.append(s)
+                return
+            # process current logic + drill down
+            if left < n:
+                dfs(left + 1, right, n, s + "(")
+            if right < left:
+                dfs(left, right + 1, n, s + ")")
+
+        dfs(0, 0, n, "")
+        return result
+
 
 if __name__ == '__main__':
     arr1 = [[0, 0], [0, 1]]
@@ -57,7 +81,4 @@ if __name__ == '__main__':
     # arr.append([4, 5, 6])
 
     # Solution().subsets([1, 2, 3])
-
-    test = [(1, 2)]
-    test = test + [(3, 3)] + []
-    print(test)
+    print(Solution().generateParenthesis(3))

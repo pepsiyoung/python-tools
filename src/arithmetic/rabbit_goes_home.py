@@ -82,6 +82,8 @@ def questionD(m, n, snake):
 
 
 def questionE(m, n, snake):
+    result = []
+
     def dfs(r, c, obstacle: set, cur: list):
         # terminator
         if [r, c] in snake:
@@ -89,14 +91,13 @@ def questionE(m, n, snake):
         if c < 0 or c >= n or r < 0 or r >= m or (r, c) in obstacle:
             return
         if c == n - 1 and r == m - 1:
-            # return [(r, c)]
-            print(cur + [(r, c)])
+            result.append(cur + [(r, c)])
 
         # process current
         obstacle.add((r, c))
+        cur.append((r, c))
 
         # drill down
-        cur.append((r, c))
         dfs(r + 1, c, obstacle, cur)
         dfs(r - 1, c, obstacle, cur)
         dfs(r, c + 1, obstacle, cur)
@@ -108,27 +109,25 @@ def questionE(m, n, snake):
         cur.append((0, 0))
 
     dfs(0, 0, set(), [])
+    return result
 
 
 if __name__ == '__main__':
     # 测试用例
-    # test_cases = [
-    #     (3, 3, [[1, 1]]),
-    #     (3, 3, [[0, 1]]),
-    #     (3, 3, [[1, 0]]),
-    #     (3, 3, [[0, 0]]),
-    #     (3, 3, [[2, 2]]),
-    #     (2, 2, [[0, 1]])
-    # ]
-    # for params in test_cases:
-    #     m, n, snake_date = params
-    #     print(f'params -> m:{m} n:{n} snake_data:{snake_date}')
-    #     print(f'func -> questionA result:{questionA(m, n, snake_date)}')
-    #     print(f'func -> questionB result:{questionB(m, n, snake_date)}')
-    #     print(f'func -> questionD result:{questionD(m, n, snake_date)}')
-    #     print('==============================')
-
-    # test_cases = [[0, 1], [1, 3]]
-    test_cases = [[0, 1], [1, 3]]
-    # print(questionA(2, 3, test_cases))
-    questionE(2, 5, test_cases)
+    test_cases = [
+        (3, 3, [[1, 1]]),
+        (2, 5, [[0, 1], [1, 3]]),
+        # (3, 3, [[0, 1]]),
+        # (3, 3, [[1, 0]]),
+        # (3, 3, [[0, 0]]),
+        # (3, 3, [[2, 2]]),
+        # (2, 2, [[0, 1]])
+    ]
+    for params in test_cases:
+        m, n, snake_date = params
+        print(f'params -> m:{m} n:{n} snake_data:{snake_date}')
+        # print(f'func -> questionA result:{questionA(m, n, snake_date)}')
+        # print(f'func -> questionB result:{questionB(m, n, snake_date)}')
+        # print(f'func -> questionD result:{questionD(m, n, snake_date)}')
+        print(f'func -> questionE result:{questionE(m, n, snake_date)}')
+        print('==============================')
