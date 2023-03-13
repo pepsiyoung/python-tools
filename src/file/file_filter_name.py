@@ -1,11 +1,22 @@
 from pathlib import Path
 from tqdm import tqdm
 import shutil
+import argparse
+
+
+def parse_opt(known=False):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source', type=str, default='./source', help='源文件夹')
+    parser.add_argument('--save', default='./target', help='保存文件夹')
+    parser.add_argument('--find-file', type=str, default='./source', help='需要查找的文件')
+    parser.add_argument('--suffix', default='txt', help='搜索文件后缀')
+    return parser.parse_known_args()[0] if known else parser.parse_args()
+
 
 if __name__ == "__main__":
-    source_dir = r'C:\Users\Administrator\Desktop\批量打标计划\数据未处理\EL-待切图\12'
-    target_dir = r'C:\Users\Administrator\Desktop\批量打标计划\数据未处理\EL-待切图\12_A'
-    paths = Path(source_dir).glob('*.{}'.format('jpg'))
-    for path in tqdm(list(paths)):
-        if 'A' in path.stem:
-            shutil.move(str(path), target_dir)
+    opt = parse_opt(True)
+    Path(opt.save).mkdir(parents=True, exist_ok=True)
+
+    for path in tqdm(list(Path(opt.find_file).rglob(f"*.{opt.suffix}"))):
+        cur = Path(opt.source).joinpath(path.name)
+        shutil.copy(str(cur), opt.save)
