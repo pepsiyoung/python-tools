@@ -1,3 +1,6 @@
+import cv2 as cv
+
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -81,4 +84,8 @@ if __name__ == '__main__':
     # arr.append([4, 5, 6])
 
     # Solution().subsets([1, 2, 3])
-    print(Solution().generateParenthesis(3))
+    # print(Solution().generateParenthesis(3))
+
+    k = cv.waitKey(5000)
+    print('k：', k)
+    # print(0xff)
