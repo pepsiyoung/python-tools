@@ -1,6 +1,7 @@
 import time
 from pathlib import Path
 from fileWatch.lru_cache import LRUCache
+import numpy as np
 
 
 def lru_cache():
@@ -29,5 +30,13 @@ def create_delay_image():
     print('end')
 
 
+def use_np_c():
+    x1 = np.array([1, 2, 3])
+    x2 = np.array([4, 5, 6])
+    res = np.c_[x1, x2]
+    print(res)
+
+
 if __name__ == '__main__':
     print(__name__)
+    use_np_c()
