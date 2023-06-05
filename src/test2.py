@@ -1,7 +1,11 @@
 import time
+import numpy as np
+import shutil
 from pathlib import Path
 from fileWatch.lru_cache import LRUCache
-import numpy as np
+from pathlib import Path
+from tqdm import tqdm
+from PIL import Image
 
 
 def lru_cache():
@@ -38,5 +42,11 @@ def use_np_c():
 
 
 if __name__ == '__main__':
-    print(__name__)
-    use_np_c()
+    source = r'D:\Datasets\DataSample\层后0411\images'
+    target = r'D:\Datasets\DataSample\层后0411\images1'
+    txt_paths = list(Path(source).glob('*.jpg'))
+    for txt_path in tqdm(list(txt_paths)):
+        im = Image.open(txt_path)
+        w, h = im.size
+        if w == 3800 and h == 2200:
+            shutil.copy(Path(txt_path), Path(target))

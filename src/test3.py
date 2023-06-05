@@ -1,91 +1,31 @@
-import cv2 as cv
+import shutil
+import os
+from pathlib import Path
+from tqdm import tqdm
+
+# root_path = r'C:\Users\admin\Desktop\气泡切图_1'
+# target_path = r'C:\Users\admin\Desktop\气泡Sample'
+# paths = Path(root_path).rglob(f'*.json')
+# cnt = 0
+# for path in paths:
+#     new_name = f'{path.parent.name}_{path.name}'
+#     path.rename(Path(target_path).joinpath(new_name))
+#
+# print('finish')
 
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+root_image_path = r'C:\Users\admin\Desktop\气泡Sample\image'
+root_json_path = r'C:\Users\admin\Desktop\气泡Sample\json'
+files = Path(root_image_path).rglob(f'*.bmp')
+cnt = 1
+for file in files:
+    img_path = file
+    json_path = Path(root_json_path).joinpath(f'{file.stem}.json')
 
+    if img_path.exists() and json_path.exists():
+        new_name = f'bubble_{cnt}'
+        os.rename(img_path, fr'C:\Users\admin\Desktop\气泡Sample\111\{new_name}.bmp')
+        os.rename(json_path, fr'C:\Users\admin\Desktop\气泡Sample\222\{new_name}.json')
+        cnt += 1
 
-class Solution:
-    def uniquePaths(self, m: int, n: int) -> int:
-        def dfs(x, y, m, n, mem):
-            # terminal
-            if x > m - 1 or y > n - 1:
-                return 0
-            if x == m - 1 or y == n - 1:
-                return 1
-            # process + drill down
-            if mem[x][y] != -1:
-                return mem[x][y]
-
-            mem[x][y] = dfs(x + 1, y, m, n, mem) + dfs(x, y + 1, m, n, mem)
-            return mem[x][y]
-
-        mem = [[-1] * n for _ in range(m)]
-        return dfs(0, 0, m, n, mem)
-
-    def uniquePathsWithObstacles(self, obstacleGrid) -> int:
-
-        def dfs(x, y):
-            # terminal
-            if (x, y) in mem:
-                return mem[x, y]
-            if x >= m or y >= n or obstacleGrid[x][y] == 1:
-                return 0
-            if x == m - 1 and y == n - 1:
-                return 1
-            mem[x, y] = dfs(x + 1, y) + dfs(x, y + 1)
-            return mem[x, y]
-
-        m = len(obstacleGrid)
-        n = len(obstacleGrid[0])
-        mem = {}
-        return dfs(0, 0)
-
-    def subsets(self, nums):
-        ans = [[]]
-        for num in nums:
-            sub_list = [_ + [num] for _ in ans]
-            ans.extend(sub_list)
-        return ans
-
-        # res = [[]]
-        # for i in nums:
-        #     sub_list = [[i] + num for num in res]
-        #     res.extend(sub_list)
-        # print(res)
-
-    def generateParenthesis(self, n: int):
-        result = []
-
-        def dfs(left, right, n, s):
-            # terminator
-            if left == n and right == n:
-                result.append(s)
-                return
-            # process current logic + drill down
-            if left < n:
-                dfs(left + 1, right, n, s + "(")
-            if right < left:
-                dfs(left, right + 1, n, s + ")")
-
-        dfs(0, 0, n, "")
-        return result
-
-
-if __name__ == '__main__':
-    arr1 = [[0, 0], [0, 1]]
-    # arr2 = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
-    # result = Solution().uniquePathsWithObstacles(arr1)
-    # print(result)
-    # arr.append([1, 2, 3])
-    # arr.append([4, 5, 6])
-
-    # Solution().subsets([1, 2, 3])
-    # print(Solution().generateParenthesis(3))
-
-    k = cv.waitKey(5000)
-    print('k：', k)
-    # print(0xff)
+print('finish')
