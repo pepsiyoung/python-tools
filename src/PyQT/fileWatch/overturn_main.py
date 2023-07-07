@@ -1,12 +1,12 @@
 import sys
 from PyQt5.QtCore import QCoreApplication, QThread
-from PyQt5.QtGui import QIcon, QIntValidator, QFont
+from PyQt5.QtGui import QIcon, QIntValidator
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QLabel, QMessageBox, QLineEdit
 from watchdog.observers import Observer
 from overturn_event_handler import OverturnEventHandler
 import my_utils
 from overturn_global_var import init as global_val_init
-from overturn_global_var import set_value, get_value
+from overturn_global_var import set_value
 
 
 # 图像水平翻转
@@ -100,7 +100,7 @@ class Example(QWidget):
 
         self.setGeometry(300, 300, 800, 400)
         self.setWindowTitle(f'overturn_{self.version}')
-        self.setWindowIcon(QIcon('./icon.png'))
+        self.setWindowIcon(QIcon('icon.png'))
         self.show()
 
     def open_source_folder(self, model):

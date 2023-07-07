@@ -5,7 +5,7 @@ from PIL import Image
 import time
 from pathlib import Path
 from watchdog.events import FileSystemEventHandler
-from fileWatch.my_utils import valid_image, cut, coord
+from src.PyQT.fileWatch.my_utils import valid_image, cut, coord
 
 
 def parse_opt(known=False):
@@ -17,7 +17,7 @@ def parse_opt(known=False):
 
 def coord():
     # print(os.getcwd())
-    with open('fileWatch/config_border.yaml', 'r', encoding="utf-8") as f:
+    with open('PyQT/fileWatch/config_border.yaml', 'r', encoding="utf-8") as f:
         file_data = f.read()
         data = yaml.load(file_data, Loader=yaml.FullLoader)
 

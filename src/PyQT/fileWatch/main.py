@@ -74,7 +74,7 @@ class Example(QWidget):
 
         self.setGeometry(300, 300, 800, 400)
         self.setWindowTitle(f'串修边程序_{version}')
-        self.setWindowIcon(QIcon('./icon.png'))
+        self.setWindowIcon(QIcon('icon.png'))
         self.show()
         # 是否自动启动
         if my_utils.get_config('auto_start') is True:
